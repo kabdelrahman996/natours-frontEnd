@@ -30,10 +30,7 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
-    RouterModule.forChild([
-      { path: '', component: ToursListComponent },
-      { path: ':id', component: ToursDetailsComponent },
-    ]),
+    RouterModule,
     SharedModule,
   ],
   exports: [

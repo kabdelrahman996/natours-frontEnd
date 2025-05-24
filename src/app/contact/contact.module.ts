@@ -6,11 +6,7 @@ import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [ContactComponent],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule.forChild([{ path: '', component: ContactComponent }]),
-  ],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   exports: [ContactComponent],
 })
 export class ContactModule {}
