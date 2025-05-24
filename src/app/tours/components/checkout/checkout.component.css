@@ -1,0 +1,120 @@
+/* src/app/checkout/checkout.component.css */
+
+.checkout-success {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  padding: 5rem 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card {
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.success-icon {
+  font-size: 5rem;
+  color: #26a69a;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.booking-details {
+  background-color: rgba(38, 166, 154, 0.08);
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: right;
+}
+
+.btn {
+  border-radius: 30px;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #26a69a;
+  border-color: #26a69a;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #00897b;
+  border-color: #00897b;
+}
+
+.btn-outline-primary {
+  color: #26a69a;
+  border-color: #26a69a;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+  background-color: #26a69a;
+  color: white;
+}
+
+/* تخصيص RTL */
+[dir="rtl"] .btn i {
+  margin-left: 0.5rem;
+  margin-right: 0;
+}
+
+[dir="rtl"] .ms-2 {
+  margin-right: 0.5rem !important;
+  margin-left: 0 !important;
+}
+
+/* تنسيق إضافي للنسخة المحمولة */
+@media (max-width: 768px) {
+  .checkout-success {
+    padding: 3rem 0;
+  }
+
+  .card-body {
+    padding: 2rem !important;
+  }
+
+  .success-icon {
+    font-size: 4rem;
+  }
+
+  .display-6 {
+    font-size: 1.5rem;
+  }
+
+  .lead {
+    font-size: 1rem;
+  }
+
+  .btn-lg {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.2rem;
+  }
+
+  .d-md-flex {
+    flex-direction: column !important;
+  }
+
+  .btn {
+    margin-top: 0.5rem;
+  }
+}

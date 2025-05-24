@@ -1,0 +1,438 @@
+/* أنماط عامة */
+.rtl-content {
+  direction: rtl;
+  text-align: right;
+}
+
+body {
+  background-color: #f8f9fa;
+}
+
+.card {
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  padding: 1.25rem 1.5rem;
+  font-weight: 600;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+/* زر العودة */
+.back-btn {
+  border-radius: 8px;
+  font-weight: 500;
+  padding: 0.6rem 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background-color: #e9ecef;
+  transform: translateX(3px); /* تم تغيير اتجاه الحركة لـ RTL */
+}
+
+/* بطاقة ملف المستخدم */
+.user-profile-card {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.profile-header {
+  height: 120px;
+  background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+}
+
+.avatar-container {
+  position: relative;
+  margin-top: -70px;
+  display: inline-block;
+}
+
+.user-avatar {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 5px solid #ffffff;
+  object-fit: cover;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.status-indicator {
+  position: absolute;
+  bottom: 15px;
+  left: 10px; /* تم تغيير من right إلى left لـ RTL */
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #28a745;
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.2);
+}
+
+.status-indicator.inactive {
+  background-color: #dc3545;
+  box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.2);
+}
+
+.user-name {
+  font-weight: 700;
+  color: #2c3e50;
+  font-size: 1.6rem;
+}
+
+.role-badge {
+  font-size: 0.85rem;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+}
+
+.role-admin {
+  background-color: #e1f5fe;
+  color: #0288d1;
+}
+
+.role-guide {
+  background-color: #e0f2f1;
+  color: #009688;
+}
+
+.role-lead-guide {
+  background-color: #f3e5f5;
+  color: #9c27b0;
+}
+
+.role-user {
+  background-color: #f5f5f5;
+  color: #607d8b;
+}
+
+.user-email {
+  font-size: 0.95rem;
+}
+
+.user-email a {
+  color: #3498db;
+  text-decoration: none;
+}
+
+.user-email a:hover {
+  text-decoration: underline;
+}
+
+.user-actions {
+  margin-top: 1.5rem;
+}
+
+.user-actions .btn {
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+/* تفاصيل البنود */
+.detail-item {
+  margin-bottom: 0.5rem;
+}
+
+.detail-label {
+  font-size: 0.85rem;
+  color: #6c757d;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.detail-value {
+  font-size: 1rem;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+/* بطاقات الإحصائيات */
+.stat-card {
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.bg-light-blue {
+  background-color: #e3f2fd;
+}
+
+.bg-light-green {
+  background-color: #e8f5e9;
+}
+
+.bg-light-purple {
+  background-color: #f3e5f5;
+}
+
+.stat-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.bg-light-blue .stat-icon {
+  background-color: #bbdefb;
+  color: #1976d2;
+}
+
+.bg-light-green .stat-icon {
+  background-color: #c8e6c9;
+  color: #388e3c;
+}
+
+.bg-light-purple .stat-icon {
+  background-color: #e1bee7;
+  color: #8e24aa;
+}
+
+.stat-details {
+  flex: 1;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+  line-height: 1;
+}
+
+.bg-light-blue .stat-value {
+  color: #1976d2;
+}
+
+.bg-light-green .stat-value {
+  color: #388e3c;
+}
+
+.bg-light-purple .stat-value {
+  color: #8e24aa;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: #6c757d;
+  font-weight: 600;
+}
+
+/* مخطط زمني للنشاط */
+.activity-timeline {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+
+.activity-timeline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 20px; /* تم تغيير من left إلى right لـ RTL */
+  width: 2px;
+  background-color: #e9ecef;
+}
+
+.activity-item {
+  position: relative;
+  padding: 1.5rem 60px 1.5rem 1.5rem; /* تم تغيير الحشو لـ RTL */
+  border-bottom: 1px solid #e9ecef;
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.activity-dot {
+  position: absolute;
+  right: 12px; /* تم تغيير من left إلى right لـ RTL */
+  top: 1.5rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.9rem;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.activity-title {
+  font-weight: 600;
+  color: #343a40;
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+}
+
+.activity-text {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-bottom: 0.5rem;
+}
+
+.activity-time {
+  font-size: 0.85rem;
+  color: #adb5bd;
+}
+
+.view-all-link {
+  display: inline-block;
+  padding: 0.75rem 0;
+  color: #007bff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.view-all-link:hover {
+  color: #0056b3;
+}
+
+/* تعديلات المواءمة */
+@media (max-width: 992px) {
+  .user-profile-card {
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .stat-card {
+    margin-bottom: 1rem;
+  }
+
+  .activity-item {
+    padding-right: 50px; /* تم تغيير من padding-left إلى padding-right لـ RTL */
+    padding-left: 1rem;
+  }
+
+  .activity-dot {
+    width: 30px;
+    height: 30px;
+    font-size: 0.75rem;
+    right: 10px; /* تم تغيير من left إلى right لـ RTL */
+  }
+
+  .profile-header {
+    height: 90px;
+  }
+
+  .user-avatar {
+    width: 120px;
+    height: 120px;
+    margin-top: -60px;
+  }
+}
+
+@media (max-width: 576px) {
+  .user-actions .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .user-name {
+    font-size: 1.4rem;
+  }
+
+  .stat-value {
+    font-size: 1.6rem;
+  }
+
+  .card-header {
+    padding: 1rem;
+  }
+
+  .card-body {
+    padding: 1.25rem;
+  }
+
+  .user-actions .btn {
+    margin-bottom: 0.5rem;
+    width: 100%;
+  }
+}
+
+/* تحسينات إضافية خاصة باللغة العربية */
+.rtl-content .ms-2 {
+  margin-right: 0.5rem !important;
+  margin-left: 0 !important;
+}
+
+.rtl-content .me-2 {
+  margin-left: 0.5rem !important;
+  margin-right: 0 !important;
+}
+
+/* تحسين مظهر النص العربي */
+.rtl-content {
+  font-family: "Cairo", "Tajawal", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: 0;
+}
+
+/* إصلاح أيقونات Font Awesome في RTL */
+.rtl-content .fa-arrow-right:before {
+  content: "\f060"; /* استبدال أيقونة السهم لتتناسب مع RTL */
+}
+
+.rtl-content .fa-arrow-left:before {
+  content: "\f061"; /* استبدال أيقونة السهم لتتناسب مع RTL */
+}
+
+/* تصحيحات المحاذاة الإضافية */
+.rtl-content .text-center {
+  text-align: center !important;
+}
+
+.rtl-content .card-header,
+.rtl-content .detail-label,
+.rtl-content .detail-value {
+  text-align: right;
+}
+
+/* تنسيق الأزرار بشكل أفضل للعربية */
+.rtl-content .btn {
+  font-weight: 600;
+}
+
+/* تحسين مظهر البطاقات في RTL */
+.rtl-content .stat-card {
+  flex-direction: row-reverse;
+}
+
+.rtl-content .stat-details {
+  text-align: right;
+}
+
+/* تحسين التباعد في القوائم */
+.rtl-content ul {
+  padding-right: 0;
+}
+
+/* تنسيق الحالة */
+.rtl-content .status-indicator.active {
+  box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.2);
+}

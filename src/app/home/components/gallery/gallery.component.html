@@ -1,0 +1,14 @@
+<section class="gallery">
+  <div class="container">
+    <h2 class="section-title">معرض الصور</h2>
+    <div class="gallery-grid">
+      <div class="gallery-item" *ngFor="let image of images">
+        <img [src]="image.url" [alt]="image.title" />
+        <div class="gallery-overlay">
+          <h3>{{ image.title }}</h3>
+          <p>{{ image.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

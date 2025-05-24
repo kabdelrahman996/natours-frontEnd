@@ -1,0 +1,158 @@
+.header {
+  background-color: #26a69a;
+  padding: 0.5rem 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: "Noto Sans Arabic", sans-serif;
+}
+
+.navbar {
+  padding: 0.5rem 0;
+
+  .navbar-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .brand-text {
+      color: #ffd700;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .brand-subtitle {
+      color: #ffffff;
+      font-size: 0.9rem;
+      font-weight: 300;
+    }
+  }
+
+  .navbar-toggler {
+    color: #ffffff;
+    border: none;
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  .navbar-nav {
+    margin-right: 2rem;
+
+    .nav-item {
+      margin: 0 0.5rem;
+
+      .nav-link {
+        color: #ffffff;
+        font-size: 1rem;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        transition: all 0.3s ease;
+
+        i {
+          margin-left: 0.5rem;
+        }
+
+        &:hover {
+          color: #ffd700;
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+
+  .profile-dropdown {
+    position: relative;
+
+    .btn-profile {
+      background-color: transparent;
+      color: #ffffff;
+      border: none;
+      font-weight: 500;
+
+      i {
+        margin-left: 0.5rem;
+        font-size: 1.2rem;
+      }
+
+      &:hover {
+        color: #ffd700;
+      }
+    }
+
+    .dropdown-menu {
+      min-width: 180px;
+      font-size: 0.95rem;
+
+      .dropdown-item {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        gap: 0.5rem;
+
+        i {
+          color: #26a69a;
+        }
+
+        &:hover {
+          background-color: #f1f1f1;
+        }
+      }
+    }
+  }
+
+  .auth-buttons {
+    display: flex;
+    gap: 1rem;
+
+    .btn {
+      padding: 0.5rem 1rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+
+      i {
+        margin-left: 0.5rem;
+      }
+    }
+
+    .btn-login {
+      background-color: transparent;
+      border: 1px solid #ffffff;
+      color: #ffffff;
+
+      &:hover {
+        background-color: #ffffff;
+        color: #26a69a;
+      }
+    }
+
+    .btn-register {
+      background-color: #ffd700;
+      border: 1px solid #ffd700;
+      color: #212121;
+
+      &:hover {
+        background-color: darken(#ffd700, 10%);
+        border-color: darken(#ffd700, 10%);
+      }
+    }
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 991px) {
+  .navbar {
+    .navbar-nav {
+      margin: 1rem 0;
+    }
+
+    .auth-buttons {
+      flex-direction: column;
+      margin: 1rem 0;
+
+      .btn {
+        width: 100%;
+      }
+    }
+  }
+}

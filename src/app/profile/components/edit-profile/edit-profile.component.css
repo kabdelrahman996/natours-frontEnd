@@ -1,0 +1,116 @@
+.edit-profile-wrapper {
+  max-width: 500px;
+  margin: 200px auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+}
+
+.image-preview {
+  margin-top: 1rem;
+  text-align: center;
+}
+.image-preview img {
+  max-width: 150px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/**/
+.image-upload-container {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.image-preview {
+  position: relative;
+  text-align: center;
+  max-width: 150px;
+}
+
+.image-preview img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+}
+
+.image-preview:hover .image-overlay {
+  opacity: 1;
+}
+
+.no-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #ccc;
+}
+
+.no-image i {
+  font-size: 40px;
+  color: #999;
+  margin-bottom: 8px;
+}
+
+.text-muted {
+  margin-top: 8px;
+  color: #777;
+}

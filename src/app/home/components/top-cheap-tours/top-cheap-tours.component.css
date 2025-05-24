@@ -1,0 +1,213 @@
+.section-title {
+  text-align: center;
+  color: #26a69a;
+  margin-bottom: 3rem;
+}
+
+/* أنماط كاروسيل الأسطوانة الدوارة */
+.cylinder-carousel-container {
+  width: 100%;
+  height: 700px;
+  position: relative;
+  perspective: 1500px;
+  overflow: hidden;
+}
+
+.cylinder-scene {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform-style: preserve-3d;
+}
+
+.cylinder {
+  position: relative;
+  width: 300px;
+  height: 400px;
+  transform-style: preserve-3d;
+  transition: transform 1s ease;
+}
+
+.cylinder-card {
+  cursor: pointer;
+  position: absolute;
+  width: 300px;
+  height: 400px;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transition: all 0.5s ease;
+  transform-origin: center center;
+}
+
+.cylinder-card:hover {
+  transform: scale(1.05) rotateY(10deg);
+}
+
+.cylinder-card-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: translateZ(0);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.cylinder-card.active .cylinder-card-content {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05) translateZ(0);
+  border-color: rgba(76, 132, 255, 0.5);
+}
+
+/* أنماط تفاصيل الجولة */
+.tour-rank {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: linear-gradient(135deg, #ff9a44 0%, #fc6076 100%);
+  color: white;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.tour-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.tour-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #3c4b64;
+  margin: 0;
+  padding-left: 15px;
+}
+
+.tour-price {
+  background: linear-gradient(135deg, #0ba360 0%, #3cba92 100%);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.tour-difficulty {
+  display: inline-block;
+  padding: 0.3rem 1rem;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.tour-difficulty.easy {
+  background: linear-gradient(135deg, #c4e6a4 0%, #8bc34a 100%);
+  color: #2e7d32;
+}
+
+.tour-difficulty.medium {
+  background: linear-gradient(135deg, #fff9c4 0%, #ffd54f 100%);
+  color: #ef6c00;
+}
+
+.tour-difficulty.difficult {
+  background: linear-gradient(135deg, #ffcdd2 0%, #ef5350 100%);
+  color: #b71c1c;
+}
+
+.tour-summary {
+  font-size: 0.9rem;
+  color: #6c757d;
+  line-height: 1.4;
+  flex: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+}
+
+.tour-guides {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.guide-avatars {
+  display: flex;
+  position: relative;
+}
+
+.guide-avatar-wrapper {
+  margin-left: -15px;
+  position: relative;
+}
+
+.guide-avatar-wrapper:first-child {
+  margin-left: 0;
+}
+
+.guide-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  object-fit: cover;
+}
+
+.guide-avatar.lead-guide {
+  border-color: #4c84ff;
+}
+
+.guides-count {
+  font-size: 0.85rem;
+  color: #6c757d;
+  white-space: nowrap;
+}
+
+/* تحسينات للأجهزة المحمولة */
+@media (max-width: 767px) {
+  .cylinder-carousel-container {
+    height: 400px;
+  }
+
+  .cylinder {
+    width: 260px;
+    height: 350px;
+  }
+
+  .cylinder-card {
+    width: 260px;
+    height: 350px;
+  }
+
+  .tour-title {
+    font-size: 1rem;
+  }
+
+  .tour-summary {
+    -webkit-line-clamp: 4;
+  }
+}

@@ -1,1 +1,33 @@
-/* You can add global styles to this file, and also import other style files */
+/* RTL Support */
+html,
+body {
+  direction: rtl;
+  text-align: right;
+  font-family: "Noto Sans Arabic", sans-serif;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #26a69a;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1f897f;
+}
+
+/* app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+} */

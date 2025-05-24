@@ -1,0 +1,226 @@
+<div class="container py-5 rtl-content">
+  <div class="row">
+    <!-- زر العودة -->
+    <div class="col-12 mb-4">
+      <a
+        [routerLink]="['/usersManagement']"
+        class="btn btn-outline-secondary back-btn"
+      >
+        <i class="fas fa-arrow-right ms-2"></i> العودة إلى المستخدمين
+      </a>
+    </div>
+
+    <app-spinner
+      *ngIf="isLoading"
+      [text]="'جاري تحميل بيانات المستخدم...'"
+    ></app-spinner>
+
+    <!-- بطاقة ملف المستخدم -->
+    <div *ngIf="!isLoading" class="col-lg-4 mb-4">
+      <div class="card user-profile-card border-0 shadow-lg h-100">
+        <div class="profile-header bg-primary"></div>
+        <div class="card-body pb-5 text-center position-relative">
+          <div class="avatar-container">
+            <img
+              [src]="imgUrl + user?.photo"
+              alt="صورة المستخدم"
+              class="user-avatar img-fluid"
+            />
+            <span class="status-indicator active" title="نشط"></span>
+          </div>
+          <h3 class="user-name mt-4 mb-1">{{ fName }}</h3>
+          <p class="user-role mb-3">
+            <span class="badge role-badge role-admin">{{ user?.role }}</span>
+          </p>
+          <div class="user-email mb-4">
+            <i class="fas fa-envelope ms-2 text-muted"></i>
+            <a href="mailto:+{{ user?.email }}">{{ user?.email }}</a>
+          </div>
+          <div class="user-actions">
+            <button
+              class="btn btn-outline-danger me-2"
+              (click)="showAlert('This feature is under development')"
+            >
+              <i class="fas fa-user-slash me-2"></i>تعطيل الحساب
+            </button>
+            <button
+              class="btn btn-primary"
+              (click)="showAlert('This feature is under development')"
+            >
+              <i class="fas fa-edit me-2"></i>تعديل الملف
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- تفاصيل المستخدم والإحصائيات -->
+    <div *ngIf="!isLoading" class="col-lg-8">
+      <!-- تفاصيل الحساب -->
+      <div class="card border-0 shadow-lg mb-4">
+        <div class="card-header bg-white border-0">
+          <h4 class="mb-0">
+            <i class="fas fa-user-circle ms-2 text-primary"></i>
+            تفاصيل الحساب
+          </h4>
+        </div>
+        <div class="card-body">
+          <div class="row g-4">
+            <div class="col-md-6">
+              <div class="detail-item">
+                <div class="detail-label">الاسم الكامل</div>
+                <div class="detail-value">{{ user?.name }}</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="detail-item">
+                <div class="detail-label">اسم المستخدم</div>
+                <div class="detail-value">
+                  {{ username }}
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="detail-item">
+                <div class="detail-label">البريد الإلكتروني</div>
+                <div class="detail-value">{{ user?.email }}</div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="detail-item">
+                <div class="detail-label">الدور</div>
+                <div class="detail-value">{{ user?.role }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- إحصائيات المستخدم -->
+      <div *ngIf="!isLoading" class="card border-0 shadow-lg mb-4">
+        <div class="card-header bg-white border-0">
+          <h4 class="mb-0">
+            <i class="fas fa-chart-bar ms-2 text-primary"></i>
+            نظرة عامة على النشاط
+          </h4>
+        </div>
+        <div class="card-body">
+          <div class="row g-4">
+            <p class="text-center"><strong>قريباً</strong></p>
+            <!-- <div class="col-md-4">
+                <div class="stat-card bg-light-blue">
+                  <div class="stat-icon">
+                    <i class="fas fa-calendar-check"></i>
+                  </div>
+                  <div class="stat-details">
+                    <h3 class="stat-value">42</h3>
+                    <div class="stat-label">جولات تم قيادتها</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="stat-card bg-light-green">
+                  <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                  </div>
+                  <div class="stat-details">
+                    <h3 class="stat-value">156</h3>
+                    <div class="stat-label">العملاء</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="stat-card bg-light-purple">
+                  <div class="stat-icon">
+                    <i class="fas fa-star"></i>
+                  </div>
+                  <div class="stat-details">
+                    <h3 class="stat-value">4.8</h3>
+                    <div class="stat-label">التقييم</div>
+                  </div>
+                </div>
+              </div> -->
+          </div>
+        </div>
+      </div>
+
+      <!-- النشاط الحديث -->
+      <div *ngIf="!isLoading" class="card border-0 shadow-lg">
+        <div class="card-header bg-white border-0">
+          <h4 class="mb-0">
+            <i class="fas fa-history ms-2 text-primary"></i>
+            النشاط الحديث
+          </h4>
+        </div>
+        <p class="text-center"><strong>قريباً</strong></p>
+
+        <!-- <div *ngIf="!isLoading" class="card-body p-0">
+            <ul class="activity-timeline">
+              <li class="activity-item">
+                <div class="activity-dot bg-primary">
+                  <i class="fas fa-user-edit"></i>
+                </div>
+                <div class="activity-content">
+                  <div class="activity-title">تم تحديث الملف الشخصي</div>
+                  <div class="activity-text">
+                    تم تغيير صورة الملف الشخصي وتحديث معلومات السيرة الذاتية
+                  </div>
+                  <div class="activity-time">
+                    <i class="far fa-clock ms-1"></i> اليوم، 10:30 صباحاً
+                  </div>
+                </div>
+              </li>
+              <li class="activity-item">
+                <div class="activity-dot bg-success">
+                  <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="activity-content">
+                  <div class="activity-title">اكتملت الجولة</div>
+                  <div class="activity-text">
+                    تم الانتهاء بنجاح من جولة "مغامرة الأضواء الشمالية" مع 12 ضيفاً
+                  </div>
+                  <div class="activity-time">
+                    <i class="far fa-clock ms-1"></i> أمس، 4:45 مساءً
+                  </div>
+                </div>
+              </li>
+              <li class="activity-item">
+                <div class="activity-dot bg-info">
+                  <i class="fas fa-comment"></i>
+                </div>
+                <div class="activity-content">
+                  <div class="activity-title">تقييم جديد</div>
+                  <div class="activity-text">
+                    تم استلام تقييم 5 نجوم من إيميلي جونسون
+                  </div>
+                  <div class="activity-time">
+                    <i class="far fa-clock ms-1"></i> 12 يونيو، 2023
+                  </div>
+                </div>
+              </li>
+              <li class="activity-item">
+                <div class="activity-dot bg-warning">
+                  <i class="fas fa-calendar-plus"></i>
+                </div>
+                <div class="activity-content">
+                  <div class="activity-title">تم جدولة جولة</div>
+                  <div class="activity-text">
+                    تمت إضافته إلى قائمة جولة "مستكشف الجبل" الشهر المقبل
+                  </div>
+                  <div class="activity-time">
+                    <i class="far fa-clock ms-1"></i> 8 يونيو، 2023
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div> -->
+        <!-- <div *ngIf="!isLoading" class="card-footer bg-white text-center">
+            <a href="#" class="view-all-link"
+              >عرض كل النشاطات <i class="fas fa-arrow-left ms-1"></i
+            ></a>
+          </div> -->
+      </div>
+    </div>
+  </div>
+</div>

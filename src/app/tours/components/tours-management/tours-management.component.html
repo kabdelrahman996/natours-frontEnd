@@ -1,0 +1,171 @@
+<div class="container mt-4" dir="rtl">
+  <!-- Header -->
+  <div class="row mb-4">
+    <div class="col-12 d-flex justify-content-between align-items-center">
+      <h2 class="mb-0">
+        <i class="fas fa-route"></i>
+        إدارة الرحلات السياحية
+      </h2>
+      <button class="btn btn-primary" routerLink="/createTour">
+        <i class="fas fa-plus-circle ms-2"></i>
+        إضافة رحلة جديدة
+      </button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <!-- <div class="card mb-4">
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label class="form-label">السعر الأدنى</label>
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="fas fa-dollar-sign"></i>
+              </span>
+              <input
+                type="number"
+                class="form-control"
+                [(ngModel)]="filterOptions.minPrice"
+                placeholder="السعر الأدنى"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label class="form-label">السعر الأقصى</label>
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="fas fa-dollar-sign"></i>
+              </span>
+              <input
+                type="number"
+                class="form-control"
+                [(ngModel)]="filterOptions.maxPrice"
+                placeholder="السعر الأقصى"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label class="form-label">التقييم</label>
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="fas fa-star"></i>
+              </span>
+              <input
+                type="number"
+                class="form-control"
+                [(ngModel)]="filterOptions.ratingsAverage"
+                placeholder="التقييم الأدنى"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label class="form-label">الموقع</label>
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="fas fa-map-marker-alt"></i>
+              </span>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="filterOptions.location"
+                placeholder="الموقع"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <button class="btn btn-secondary" (click)="applyFilters()">
+            <i class="fas fa-filter ms-2"></i>
+            تطبيق الفلترة
+          </button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- Tours Table -->
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive" *ngIf="!loading; else loadingTemplate">
+        <table class="table table-hover">
+          <thead class="table-light">
+            <tr>
+              <th>الصورة</th>
+              <th>اسم الرحلة</th>
+              <th>المدة</th>
+              <th>المستوى</th>
+              <th>السعر</th>
+              <th>التقييم</th>
+              <th>الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tour of tours">
+              <td>
+                <img
+                  [src]="imageUrl + '/tours/' + tour.imageCover"
+                  [alt]="tour.name"
+                  class="tour-image rounded"
+                />
+              </td>
+              <td>{{ tour.name }}</td>
+              <td>{{ tour.duration }} يوم</td>
+              <td>
+                <span
+                  class="badge"
+                  [ngClass]="getDifficultyBadgeClass(tour.difficulty)"
+                >
+                  {{ getDifficultyInArabic(tour.difficulty) }}
+                </span>
+              </td>
+              <td>{{ tour.price }} جنيه</td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <i class="fas fa-star text-warning me-1"></i>
+                  {{ tour.ratingsAverage }}
+                  <small class="text-muted me-2"
+                    >({{ tour.ratingsQuantity }} تقييم)</small
+                  >
+                </div>
+              </td>
+              <td>
+                <div class="btn-group d-flex gap-1">
+                  <button
+                    class="btn btn-sm btn-info"
+                    [routerLink]="['/tours', tour._id]"
+                  >
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <button
+                    class="btn btn-sm btn-danger"
+                    (click)="deleteTour(tour._id)"
+                  >
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Template -->
+  <ng-template #loadingTemplate>
+    <div class="text-center p-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">جاري التحميل...</span>
+      </div>
+      <p class="mt-2">جاري تحميل الرحلات...</p>
+    </div>
+  </ng-template>
+</div>

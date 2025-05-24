@@ -1,0 +1,71 @@
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <!-- Company Info -->
+      <div class="col-md-4">
+        <h3 class="footer-title">زُها</h3>
+        <p class="footer-description">
+          اكتشف جمال مصر مع أفضل الجولات السياحية المخصصة لك. نقدم تجربة سفر
+          فريدة تجمع بين الثقافة والمغامرة والراحة.
+        </p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="col-md-4">
+        <h3 class="footer-title">روابط سريعة</h3>
+        <ul class="footer-links">
+          <li>
+            <a [routerLink]="['/home']"
+              ><i class="fas fa-chevron-left"></i> الرئيسية</a
+            >
+          </li>
+          <li>
+            <a [routerLink]="['/tours']"
+              ><i class="fas fa-chevron-left"></i> الجولات السياحية</a
+            >
+          </li>
+          <li>
+            <a [routerLink]="['/about']"
+              ><i class="fas fa-chevron-left"></i> عن زُها</a
+            >
+          </li>
+          <li>
+            <a [routerLink]="['/contact']"
+              ><i class="fas fa-chevron-left"></i> اتصل بنا</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="col-md-4">
+        <h3 class="footer-title">تواصل معنا</h3>
+        <ul class="footer-contact">
+          <li>
+            <i class="fas fa-map-marker-alt"></i>
+            القاهرة، مصر
+          </li>
+          <li>
+            <i class="fas fa-phone"></i>
+            +20 123 456 789
+          </li>
+          <li>
+            <i class="fas fa-envelope"></i>
+            {{ "info@zoha.com" }}
+          </li>
+        </ul>
+        <div class="social-links">
+          <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="footer-bottom">
+      <p>جميع الحقوق محفوظة &copy; {{ date }} زُها للسياحة</p>
+    </div>
+  </div>
+</footer>

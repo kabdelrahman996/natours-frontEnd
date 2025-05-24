@@ -1,0 +1,286 @@
+<div class="container-fluid py-5 rtl-content">
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="d-flex flex-wrap justify-content-between align-items-center">
+        <h2 class="page-title mb-3 mb-sm-0">
+          <i class="fas fa-chart-line ms-2"></i>
+          إحصائيات الجولات السياحية
+        </h2>
+        <div class="d-flex gap-2">
+          <button class="btn btn-outline-primary" id="refreshBtn">
+            <i class="fas fa-sync-alt ms-2"></i>
+            تحديث البيانات
+          </button>
+          <select class="form-select year-select" id="yearSelect">
+            <option value="2023">2023</option>
+            <option value="2022">2022</option>
+            <option value="2021">2021</option>
+            <option value="2020">2020</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- بطاقات الإحصائيات الرئيسية -->
+  <div class="row mb-4">
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card stats-card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <h6 class="stats-title text-muted">عدد الجولات</h6>
+              <h3 class="stats-value">24</h3>
+              <div class="stats-change positive">
+                <i class="fas fa-arrow-up ms-1"></i>
+                <span>15%</span> مقارنة بالشهر السابق
+              </div>
+            </div>
+            <div class="stats-icon-container bg-light-blue">
+              <i class="fas fa-route"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card stats-card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <h6 class="stats-title text-muted">متوسط التقييم</h6>
+              <h3 class="stats-value">4.7</h3>
+              <div class="stats-change positive">
+                <i class="fas fa-arrow-up ms-1"></i>
+                <span>3%</span> مقارنة بالشهر السابق
+              </div>
+            </div>
+            <div class="stats-icon-container bg-light-yellow">
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card stats-card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <h6 class="stats-title text-muted">متوسط السعر</h6>
+              <h3 class="stats-value">$1,247</h3>
+              <div class="stats-change negative">
+                <i class="fas fa-arrow-down ms-1"></i>
+                <span>8%</span> مقارنة بالشهر السابق
+              </div>
+            </div>
+            <div class="stats-icon-container bg-light-green">
+              <i class="fas fa-dollar-sign"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card stats-card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <h6 class="stats-title text-muted">إجمالي المشاركين</h6>
+              <h3 class="stats-value">1,458</h3>
+              <div class="stats-change positive">
+                <i class="fas fa-arrow-up ms-1"></i>
+                <span>12%</span> مقارنة بالشهر السابق
+              </div>
+            </div>
+            <div class="stats-icon-container bg-light-purple">
+              <i class="fas fa-users"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- أفضل 5 جولات من حيث السعر -->
+    <div class="col-lg-6 mb-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-header bg-white border-0">
+          <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">
+              <i class="fas fa-trophy ms-2 text-warning"></i>
+              أفضل 5 جولات من حيث السعر
+            </h5>
+            <button class="btn btn-sm btn-light rounded-circle" title="تحديث">
+              <i class="fas fa-sync-alt"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col" width="50">#</th>
+                  <th scope="col">اسم الجولة</th>
+                  <th scope="col">السعر</th>
+                  <th scope="col">الصعوبة</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let tour of topCheapTours; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>
+                    <div class="tour-name-cell">
+                      <span>{{ tour.name }}</span>
+                    </div>
+                  </td>
+
+                  <td>{{ tour.price }} <strong>EGP</strong></td>
+                  <td>
+                    <span [ngClass]="`badge badge-${tour.difficulty }`">{{
+                      tour.difficulty
+                    }}</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- إحصائيات الجولات -->
+    <div class="col-lg-6 mb-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-header bg-white border-0">
+          <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">
+              <i class="fas fa-chart-pie ms-2 text-primary"></i>
+              إحصائيات الجولات حسب الصعوبة
+            </h5>
+            <button class="btn btn-sm btn-light rounded-circle" title="تحديث">
+              <i class="fas fa-sync-alt"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="text-center mb-3">
+            <!-- هنا يمكن إضافة مخطط دائري (رسم بياني) -->
+            <img
+              src="https://via.placeholder.com/500x250"
+              alt="مخطط إحصائيات الجولات"
+              class="img-fluid chart-placeholder"
+            />
+          </div>
+          <div class="row stats-summary">
+            <div class="col-md-4 mb-3">
+              <div class="difficulty-stat easy">
+                <h4>45%</h4>
+                <div class="stat-label">سهلة</div>
+                <div class="tours-count">14 جولة</div>
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <div class="difficulty-stat medium">
+                <h4>32%</h4>
+                <div class="stat-label">متوسطة</div>
+                <div class="tours-count">10 جولات</div>
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <div class="difficulty-stat hard">
+                <h4>23%</h4>
+                <div class="stat-label">صعبة</div>
+                <div class="tours-count">7 جولات</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- الخطة الشهرية -->
+  <div class="row">
+    <div class="col-12 mb-4">
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white border-0">
+          <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">
+              <i class="fas fa-calendar-alt ms-2 text-info"></i>
+              الخطة الشهرية للجولات (2023)
+            </h5>
+            <button class="btn btn-sm btn-light rounded-circle" title="تحديث">
+              <i class="fas fa-sync-alt"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="text-center mb-4">
+            <!-- هنا يمكن إضافة رسم بياني عمودي للأشهر -->
+            <img
+              src="https://via.placeholder.com/1000x400"
+              alt="مخطط الخطة الشهرية"
+              class="img-fluid chart-placeholder"
+            />
+          </div>
+          <div class="row">
+            <div class="col-xl-3 col-md-6 mb-3">
+              <div class="monthly-highlight">
+                <div class="month-info">
+                  <span class="highlight-label">الشهر الأكثر ازدحاماً</span>
+                  <h4>أغسطس</h4>
+                  <span class="highlight-value">12 جولة</span>
+                </div>
+                <div class="month-icon bg-light-red">
+                  <i class="fas fa-fire"></i>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-3">
+              <div class="monthly-highlight">
+                <div class="month-info">
+                  <span class="highlight-label">الشهر الأقل ازدحاماً</span>
+                  <h4>فبراير</h4>
+                  <span class="highlight-value">3 جولات</span>
+                </div>
+                <div class="month-icon bg-light-blue">
+                  <i class="fas fa-snowflake"></i>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-3">
+              <div class="monthly-highlight">
+                <div class="month-info">
+                  <span class="highlight-label">متوسط الجولات شهرياً</span>
+                  <h4>7.5</h4>
+                  <span class="highlight-value">جولة</span>
+                </div>
+                <div class="month-icon bg-light-green">
+                  <i class="fas fa-calculator"></i>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-3">
+              <div class="monthly-highlight">
+                <div class="month-info">
+                  <span class="highlight-label">إجمالي الجولات السنوية</span>
+                  <h4>90</h4>
+                  <span class="highlight-value">جولة</span>
+                </div>
+                <div class="month-icon bg-light-purple">
+                  <i class="fas fa-calendar-check"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

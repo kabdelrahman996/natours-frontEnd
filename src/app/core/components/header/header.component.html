@@ -1,0 +1,98 @@
+<header class="header">
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <!-- Logo -->
+      <a class="navbar-brand" href="#">
+        <span class="brand-text">زُها</span>
+        <span class="brand-subtitle">استكشف مصر</span>
+      </a>
+
+      <!-- Mobile Toggle Button -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <!-- Navigation Items -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/home']">
+              <i class="fas fa-home"></i>
+              الرئيسية
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/tours']">
+              <i class="fas fa-map-marked-alt"></i>
+              الجولات السياحية
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/about']">
+              <i class="fas fa-info-circle"></i>
+              عن زُها
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/contact']">
+              <i class="fas fa-phone-alt"></i>
+              اتصل بنا
+            </a>
+          </li>
+        </ul>
+
+        <div *ngIf="currentUser" class="dropdown profile-dropdown">
+          <button
+            class="btn btn-profile dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fas fa-user-circle"></i>
+            {{ currentUser?.name || "الملف الشخصي" }}
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <a class="dropdown-item" [routerLink]="['/me']">
+                <i class="fas fa-user"></i> الملف الشخصي
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li>
+              <a class="dropdown-item" (click)="logout()">
+                <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Auth Buttons -->
+        <div class="auth-buttons">
+          <button
+            *ngIf="!currentUser"
+            class="btn btn-login"
+            [routerLink]="['/login']"
+          >
+            <i class="fas fa-sign-in-alt"></i>
+            تسجيل الدخول
+          </button>
+          <button
+            [routerLink]="['/signup']"
+            *ngIf="!currentUser"
+            class="btn btn-register"
+          >
+            <i class="fas fa-user-plus"></i>
+            حساب جديد
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

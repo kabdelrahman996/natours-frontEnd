@@ -1,0 +1,108 @@
+<!-- أفضل 5 جولات من حيث السعر - كاروسيل ثلاثي الأبعاد -->
+<div class="parent col-12 mb-4">
+  <div class="card border-0 shadow-sm">
+    <div class="card-header bg-white border-0">
+      <div class="d-flex justify-content-between align-items-center">
+        <h3 class="section-title my-3">
+          <i class="fas fa-trophy ms-2 text-warning"></i>
+          أفضل 5 جولات من حيث السعر
+        </h3>
+        <div>
+          <button
+            class="btn btn-sm btn-light rounded-circle mx-1"
+            (click)="rotatePrev()"
+            title="السابق"
+          >
+            <i class="fas fa-chevron-right"></i>
+          </button>
+          <button
+            class="btn btn-sm btn-light rounded-circle mx-1"
+            (click)="toggleAutoRotate()"
+            title="إيقاف/تشغيل"
+          >
+            <i
+              class="fas"
+              [ngClass]="{
+                'fa-pause': isAutoRotating,
+                'fa-play': !isAutoRotating
+              }"
+            ></i>
+          </button>
+          <button
+            class="btn btn-sm btn-light rounded-circle mx-1"
+            (click)="rotateNext()"
+            title="التالي"
+          >
+            <i class="fas fa-chevron-left"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="cylinder-carousel-container">
+        <div class="cylinder-scene">
+          <div
+            class="cylinder"
+            [style.transform]="'rotateY(' + cylinderRotation + 'deg)'"
+          >
+            <div
+              *ngFor="let tour of topCheapTours; let i = index"
+              [routerLink]="['/tours', tour._id]"
+              class="cylinder-card"
+              [style.transform]="getCylinderCardTransform(i)"
+              [ngClass]="{ active: i === activeCardIndex }"
+            >
+              <div class="cylinder-card-content">
+                <div class="tour-rank">{{ i + 1 }}</div>
+                <div class="tour-header">
+                  <h5 class="tour-title">{{ tour.name }}</h5>
+                  <div class="tour-price">${{ tour.price }}</div>
+                </div>
+
+                <div
+                  class="tour-difficulty"
+                  [ngClass]="{
+                    easy: tour.difficulty === 'easy',
+                    medium: tour.difficulty === 'medium',
+                    difficult: tour.difficulty === 'difficult'
+                  }"
+                >
+                  {{ tour.difficulty }}
+                </div>
+
+                <p class="tour-summary">{{ tour.summary }}</p>
+
+                <div class="tour-guides">
+                  <div class="guide-avatars">
+                    <ng-container
+                      *ngFor="let guide of tour.guides; let j = index"
+                    >
+                      <div
+                        *ngIf="j < 3"
+                        class="guide-avatar-wrapper"
+                        [style.z-index]="tour.guides.length - j"
+                      >
+                        <img
+                          [src]="imgUrl + '/users/' + guide.photo"
+                          [alt]="guide.name"
+                          class="guide-avatar"
+                          [ngClass]="{
+                            'lead-guide': guide.role === 'lead-guide'
+                          }"
+                        />
+                      </div>
+                    </ng-container>
+                  </div>
+                  <span class="guides-count"
+                    >{{ tour.guides.length || 0 }}
+                    {{ tour.guides.length === 1 ? "مرشد" : "مرشدين" }}</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

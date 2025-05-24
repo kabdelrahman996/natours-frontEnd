@@ -1,0 +1,216 @@
+<div class="all-bookings-page">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="container">
+      <!-- Different title based on view mode -->
+      <h1 class="page-title">
+        {{ isAdminView ? "جميع الحجوزات" : "رحلاتي المحجوزة" }}
+      </h1>
+      <!-- Different subtitle based on view mode -->
+      <p class="page-subtitle">
+        {{
+          isAdminView
+            ? "استعراض جميع الحجوزات في النظام"
+            : "استعرض جميع الرحلات التي قمت بحجزها"
+        }}
+      </p>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Loading State -->
+    <div class="loading-container" *ngIf="isLoading">
+      <div class="spinner"></div>
+      <p>جاري تحميل الرحلات المحجوزة...</p>
+    </div>
+
+    <!-- Error State -->
+    <div class="error-container" *ngIf="error && !isLoading">
+      <div class="error-icon">
+        <i class="fas fa-exclamation-circle"></i>
+      </div>
+      <h3>حدث خطأ</h3>
+      <p>{{ error }}</p>
+      <button class="btn-retry" (click)="loadBookings()">
+        <i class="fas fa-sync-alt"></i> إعادة المحاولة
+      </button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="bookings-content" *ngIf="!isLoading && !error">
+      <!-- No Bookings Message -->
+      <div class="no-bookings" *ngIf="filteredBookings.length === 0">
+        <div class="empty-icon">
+          <i class="fas fa-ticket-alt"></i>
+        </div>
+        <h3>
+          {{
+            isAdminView ? "لا توجد حجوزات في النظام" : "لا توجد رحلات محجوزة"
+          }}
+        </h3>
+        <p>
+          {{
+            isAdminView
+              ? "لا توجد حجوزات مسجلة في النظام حتى الآن"
+              : "لم تقم بحجز أي رحلات سياحية بعد"
+          }}
+        </p>
+        <a [routerLink]="['/tours']" class="browse-tours-btn">
+          <i class="fas fa-search"></i> استكشف الرحلات المتاحة
+        </a>
+      </div>
+
+      <!-- Bookings List Section -->
+      <div class="bookings-section" *ngIf="filteredBookings.length > 0">
+        <!-- Filters and Controls -->
+        <div class="bookings-controls">
+          <div class="bookings-count me-auto">
+            <span>{{ filteredBookings.length }} رحلة محجوزة</span>
+          </div>
+        </div>
+
+        <!-- Bookings Table -->
+        <div class="bookings-table-container">
+          <table class="bookings-table">
+            <thead>
+              <tr>
+                <th class="th-tour text-center">الرحلة</th>
+                <!-- Show user column only in admin view -->
+                <th class="th-user text-center" *ngIf="isAdminView">
+                  المستخدم
+                </th>
+                <th
+                  class="th-date text-center"
+                  (click)="onSortChange('createdAt')"
+                >
+                  تاريخ الحجز
+                  <i
+                    class="fas"
+                    [ngClass]="{
+                      'fa-sort': sortField !== 'createdAt',
+                      'fa-sort-up':
+                        sortField === 'createdAt' && sortDirection === 'asc',
+                      'fa-sort-down':
+                        sortField === 'createdAt' && sortDirection === 'desc'
+                    }"
+                  ></i>
+                </th>
+                <th
+                  class="th-price text-center"
+                  (click)="onSortChange('price')"
+                >
+                  السعر
+                  <i
+                    class="fas"
+                    [ngClass]="{
+                      'fa-sort': sortField !== 'price',
+                      'fa-sort-up':
+                        sortField === 'price' && sortDirection === 'asc',
+                      'fa-sort-down':
+                        sortField === 'price' && sortDirection === 'desc'
+                    }"
+                  ></i>
+                </th>
+                <th class="th-status text-center">الحالة</th>
+                <th class="th-actions text-center">الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let booking of getPaginatedBookings()">
+                <td class="td-tour">
+                  <div class="tour-info">
+                    <div class="tour-icon">
+                      <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <div class="tour-details">
+                      <span class="tour-name">{{ booking.tour.name }}</span>
+                    </div>
+                  </div>
+                </td>
+                <!-- User info column for admin view -->
+                <td class="td-user" *ngIf="isAdminView">
+                  <div class="user-info">
+                    <div class="user-icon">
+                      <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-details">
+                      <span class="user-name">{{ booking.user?.name }}</span>
+                      <span class="user-email">{{ booking.user?.email }}</span>
+                    </div>
+                  </div>
+                </td>
+                <td class="td-date">
+                  {{ booking.createdAt | date : "dd/MM/yyyy" }}
+                </td>
+                <td class="td-price">{{ booking.price }} $</td>
+                <td class="td-status">
+                  <span
+                    class="status-badge"
+                    [ngClass]="getBookingStatusClass(booking)"
+                  >
+                    <i
+                      class="fas"
+                      [ngClass]="booking.paid ? 'fa-check-circle' : 'fa-clock'"
+                    ></i>
+                    {{ getBookingStatusText(booking) }}
+                  </span>
+                </td>
+                <td class="td-actions d-flex">
+                  <a
+                    [routerLink]="['/tours', booking.tour._id]"
+                    class="action-btn view-btn"
+                  >
+                    <i class="fas fa-eye"></i>
+                    <span>عرض الرحلة</span>
+                  </a>
+
+                  <button
+                    *ngIf="isAdminView"
+                    class="action-btn delete-btn"
+                    (click)="deleteBooking(booking._id)"
+                  >
+                    <i class="fas fa-trash-alt"></i>
+                    <span>حذف</span>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" *ngIf="filteredBookings.length > itemsPerPage">
+          <button
+            class="pagination-btn"
+            [disabled]="currentPage === 1"
+            (click)="onPageChange(currentPage - 1)"
+          >
+            <i class="fas fa-chevron-right"></i>
+          </button>
+
+          <div class="pagination-pages">
+            <button
+              *ngFor="
+                let page of [].constructor(getTotalPages());
+                let i = index
+              "
+              class="page-btn"
+              [class.active]="currentPage === i + 1"
+              (click)="onPageChange(i + 1)"
+            >
+              {{ i + 1 }}
+            </button>
+          </div>
+
+          <button
+            class="pagination-btn"
+            [disabled]="currentPage === getTotalPages()"
+            (click)="onPageChange(currentPage + 1)"
+          >
+            <i class="fas fa-chevron-left"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

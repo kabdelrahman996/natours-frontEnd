@@ -1,0 +1,505 @@
+/* أنماط عامة للصفحة */
+.rtl-content {
+  direction: rtl;
+  text-align: right;
+  font-family: "Cairo", "Tajawal", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: 0;
+}
+
+.page-title {
+  color: #2c3e50;
+  font-weight: 700;
+  font-size: 1.8rem;
+}
+
+.card {
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.card-header {
+  padding: 1.25rem 1.5rem;
+  font-weight: 600;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+/* أنماط بطاقات الإحصائيات */
+.stats-card {
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.stats-title {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.stats-value {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+.stats-change {
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+}
+
+.stats-change.positive {
+  color: #28a745;
+}
+
+.stats-change.negative {
+  color: #dc3545;
+}
+
+.stats-change span {
+  font-weight: 600;
+  margin: 0 2px;
+}
+
+.stats-icon-container {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.bg-light-blue {
+  background-color: #e3f2fd;
+  color: #0d6efd;
+}
+
+.bg-light-yellow {
+  background-color: #fff8e1;
+  color: #ffc107;
+}
+
+.bg-light-green {
+  background-color: #e8f5e9;
+  color: #28a745;
+}
+
+.bg-light-purple {
+  background-color: #f3e5f5;
+  color: #6f42c1;
+}
+
+.bg-light-red {
+  background-color: #ffe7e6;
+  color: #dc3545;
+}
+
+/* أنماط الجدول وقائمة الجولات */
+.table {
+  margin-bottom: 0;
+  font-size: 0.95rem;
+}
+
+.table th {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #495057;
+}
+
+.table td {
+  vertical-align: middle;
+  padding: 0.75rem;
+}
+
+.tour-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tour-thumb {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+
+.rating-stars {
+  color: #ffc107;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.rating-text {
+  color: #6c757d;
+  margin-right: 5px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.badge {
+  padding: 0.5em 0.8em;
+  font-weight: 500;
+  border-radius: 50px;
+  font-size: 0.8rem;
+}
+
+/* أنماط مخطط الإحصائيات */
+.chart-placeholder {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.stats-summary {
+  margin-top: 1rem;
+}
+
+.difficulty-stat {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  transition: transform 0.3s ease;
+  height: 100%;
+}
+
+.difficulty-stat:hover {
+  transform: translateY(-5px);
+}
+
+.difficulty-stat h4 {
+  font-weight: 700;
+  font-size: 1.8rem;
+  margin-bottom: 0.3rem;
+}
+
+.difficulty-stat.easy h4 {
+  color: #28a745;
+}
+
+.difficulty-stat.medium h4 {
+  color: #ffc107;
+}
+
+.difficulty-stat.hard h4 {
+  color: #dc3545;
+}
+
+.badge-easy {
+  background-color: #28a745;
+  font-weight: bold;
+}
+.badge-medium {
+  background-color: #ffc107;
+  font-weight: bold;
+}
+.badge-difficult {
+  background-color: #dc3545;
+  font-weight: bold;
+}
+
+.stat-label {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #2c3e50;
+  margin-bottom: 0.3rem;
+}
+
+.tours-count {
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+/* أنماط الخطة الشهرية */
+.monthly-highlight {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  transition: all 0.3s ease;
+}
+
+.monthly-highlight:hover {
+  transform: translateY(-5px);
+  background-color: #ffffff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.month-info {
+  flex: 1;
+}
+
+.highlight-label {
+  font-size: 0.85rem;
+  color: #6c757d;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.month-info h4 {
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 0.2rem;
+  color: #2c3e50;
+}
+
+.highlight-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #495057;
+}
+
+.month-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  margin-right: 1rem;
+}
+
+/* أنماط زر التحديث وعناصر التحكم */
+.year-select {
+  width: auto;
+  min-width: 120px;
+  font-weight: 500;
+  border-radius: 8px;
+}
+
+#refreshBtn {
+  font-weight: 500;
+  border-radius: 8px;
+}
+
+/* ضبط RTL لعناصر Bootstrap */
+.rtl-content .ms-2 {
+  margin-right: 0.5rem !important;
+  margin-left: 0 !important;
+}
+
+.rtl-content .me-2 {
+  margin-left: 0.5rem !important;
+  margin-right: 0 !important;
+}
+
+.rtl-content .ms-1 {
+  margin-right: 0.25rem !important;
+  margin-left: 0 !important;
+}
+
+.rtl-content .me-1 {
+  margin-left: 0.25rem !important;
+  margin-right: 0 !important;
+}
+
+/* ضبط أيقونات Font Awesome */
+.rtl-content .fa-arrow-up:before,
+.rtl-content .fa-arrow-down:before {
+  /* الحفاظ على اتجاه الأسهم للأعلى والأسفل */
+}
+
+.rtl-content .fa-arrow-right:before {
+  content: "\f060"; /* استبدال أيقونة السهم لتتناسب مع RTL */
+}
+
+.rtl-content .fa-arrow-left:before {
+  content: "\f061"; /* استبدال أيقونة السهم لتتناسب مع RTL */
+}
+
+/* تحسينات الاستجابة للشاشات المختلفة */
+@media (max-width: 1200px) {
+  .stats-value {
+    font-size: 1.7rem;
+  }
+
+  .monthly-highlight {
+    padding: 0.8rem;
+  }
+
+  .month-info h4 {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .difficulty-stat,
+  .monthly-highlight {
+    margin-bottom: 1rem;
+  }
+
+  .stats-value {
+    font-size: 1.5rem;
+  }
+
+  .month-info h4 {
+    font-size: 1.2rem;
+  }
+
+  .month-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .card-header,
+  .card-body {
+    padding: 1rem;
+  }
+
+  .page-title {
+    font-size: 1.3rem;
+  }
+
+  .stats-icon-container {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+
+  .stats-title {
+    font-size: 0.8rem;
+  }
+
+  .stats-value {
+    font-size: 1.3rem;
+  }
+
+  .stats-change {
+    font-size: 0.75rem;
+  }
+
+  .tour-name-cell {
+    gap: 5px;
+  }
+
+  .tour-thumb {
+    width: 35px;
+    height: 35px;
+  }
+
+  .table {
+    font-size: 0.85rem;
+  }
+
+  .monthly-highlight {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .month-icon {
+    margin: 0 0 0.5rem 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .card {
+    border-radius: 10px;
+  }
+
+  .page-title {
+    font-size: 1.2rem;
+  }
+
+  .card-header h5 {
+    font-size: 1rem;
+  }
+
+  .stats-card {
+    margin-bottom: 1rem;
+  }
+
+  .stats-value {
+    font-size: 1.2rem;
+  }
+
+  .table th,
+  .table td {
+    padding: 0.5rem;
+  }
+
+  .tour-thumb {
+    width: 30px;
+    height: 30px;
+  }
+
+  .badge {
+    font-size: 0.7rem;
+    padding: 0.4em 0.7em;
+  }
+
+  .difficulty-stat h4 {
+    font-size: 1.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.9rem;
+  }
+
+  .month-info h4 {
+    font-size: 1.1rem;
+  }
+}
+
+/* تحسينات خاصة بمظهر البيانات */
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 123, 255, 0.05);
+}
+
+.table thead th {
+  border-top: none;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.table-light {
+  background-color: #f8f9fa;
+}
+
+.btn-light {
+  background-color: #f8f9fa;
+  border-color: #f8f9fa;
+  color: #6c757d;
+}
+
+.btn-light:hover {
+  background-color: #e9ecef;
+  border-color: #e9ecef;
+  color: #495057;
+}
+
+/* تأثيرات حركية إضافية */
+.stats-card:hover .stats-icon-container,
+.monthly-highlight:hover .month-icon {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+.stats-card:hover .stats-value,
+.difficulty-stat:hover h4,
+.monthly-highlight:hover h4 {
+  transform: translateY(-2px);
+  transition: transform 0.3s ease;
+}

@@ -1,0 +1,115 @@
+<!-- <div class="filters-container">
+  <div class="filters-header">
+    <div class="search-bar">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="ابحث عن رحلة..." />
+    </div>
+
+    <button class="btn-toggle" (click)="toggleFilters()">
+      <i class="fas fa-filter"></i>
+      الفلترة
+      <i
+        class="fas"
+        [class.fa-chevron-down]="!isExpanded"
+        [class.fa-chevron-up]="isExpanded"
+      ></i>
+    </button>
+  </div>
+
+  <div
+    class="filters-content"
+    [class.expanded]="isExpanded"
+    [formGroup]="filterForm"
+  >
+    <div class="filters-grid"> -->
+<!-- Location Filter -->
+<!-- <div class="filter-group">
+        <label class="filter-label">
+          <i class="fas fa-map-marker-alt"></i>
+          الموقع
+        </label>
+        <select formControlName="location" class="filter-select">
+          <option value="">كل المواقع</option>
+          <option *ngFor="let location of locations" [value]="location">
+            {{ location }}
+          </option>
+        </select>
+      </div> -->
+
+<!-- Price Range Filter -->
+<!-- <div class="filter-group">
+        <label class="filter-label">
+          <i class="fas fa-tag"></i>
+          نطاق السعر
+        </label>
+        <select formControlName="priceRange" class="filter-select">
+          <option *ngFor="let range of priceRanges" [value]="range.value">
+            {{ range.label }}
+          </option>
+        </select>
+      </div> -->
+
+<!-- Rating Filter -->
+<!-- <div class="filter-group">
+        <label class="filter-label">
+          <i class="fas fa-star"></i>
+          التقييم
+        </label>
+        <select formControlName="rating" class="filter-select">
+          <option *ngFor="let rating of ratings" [value]="rating.value">
+            {{ rating.label }}
+          </option>
+        </select> -->
+<!-- </div> -->
+
+<!-- Reset Button -->
+<!-- <button class="btn-reset" (click)="resetFilters()">
+        <i class="fas fa-redo"></i>
+        إعادة ضبط
+      </button>
+    </div> -->
+
+<!-- Active Filters -->
+<!-- <div class="active-filters" *ngIf="filterForm.value | hasActiveFilters">
+      <div class="active-filters-label">الفلاتر النشطة:</div>
+      <div class="filter-tags">
+        <div class="filter-tag" *ngIf="filterForm.get('location')?.value">
+          <span>الموقع: {{ filterForm.get("location")?.value }}</span>
+          <i
+            class="fas fa-times"
+            (click)="filterForm.get('location')?.reset()"
+          ></i>
+        </div>
+        <div class="filter-tag" *ngIf="filterForm.get('priceRange')?.value">
+          <span
+            >السعر:
+            {{ getPriceRangeLabel(filterForm.get("priceRange")?.value) }}</span
+          >
+          <i
+            class="fas fa-times"
+            (click)="filterForm.get('priceRange')?.reset()"
+          ></i>
+        </div>
+        <div class="filter-tag" *ngIf="filterForm.get('rating')?.value">
+          <span
+            >التقييم:
+            {{ getRatingLabel(filterForm.get("rating")?.value) }}</span
+          >
+          <i
+            class="fas fa-times"
+            (click)="filterForm.get('rating')?.reset()"
+          ></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<div class="filters-container">
+  <label for="">المكان</label>
+  <select class="form-select">
+    <option value="">كل المواقع</option>
+    <option *ngFor="let location of locations" [value]="location">
+      {{ location }}
+    </option>
+  </select>
+</div>

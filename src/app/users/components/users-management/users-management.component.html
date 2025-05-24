@@ -1,0 +1,114 @@
+<div class="container py-5">
+  <h2 class="mb-5 text-center">User Management</h2>
+
+  <!-- Search and Sort Controls -->
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="input-group search-container shadow-sm">
+        <span class="input-group-text border-end-0">
+          <i class="fas fa-search text-muted" (click)="onSearch($event)"></i>
+        </span>
+        <input
+          type="text"
+          class="form-control border-start-0 search-input"
+          placeholder="Search by name, email or role..."
+          [(ngModel)]="searchText"
+          (keydown.enter)="onSearch($event)"
+        />
+      </div>
+    </div>
+    <!-- <div class="col-md-6 d-flex justify-content-md-end mt-3 mt-md-0">
+      <div class="input-group sort-container shadow-sm">
+        <span class="input-group-text bg-white border-end-0">
+          <i class="fas fa-sort-amount-down text-muted"></i>
+        </span>
+        <select class="form-select border-start-0 sort-select">
+          <option value="">All Roles</option>
+          <option value="admin">Admin</option>
+          <option value="guide">Guide</option>
+          <option value="lead-guide">Lead Guide</option>
+          <option value="user">User</option>
+        </select>
+      </div>
+    </div> -->
+  </div>
+
+  <app-spinner
+    *ngIf="isLoading"
+    [text]="'جاري تحميل المستخدمين...'"
+  ></app-spinner>
+
+  <!-- User Table Card -->
+  <div *ngIf="!isLoading" class="card shadow-lg border-0 rounded-lg">
+    <div class="card-body p-4">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead class="bg-light">
+            <tr>
+              <th scope="col">Photo</th>
+              <th scope="col">Name</th>
+              <th scope="col">Role</th>
+              <th scope="col">Status</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Static User Row 1 -->
+            <tr *ngFor="let user of users" class="user-row">
+              <td>
+                <img
+                  [src]="imgUrl + user.photo"
+                  alt="John Doe Avatar"
+                  class="user-avatar shadow-sm"
+                />
+              </td>
+              <td>
+                <div class="user-info">
+                  <div class="user-name fw-semibold">{{ user.name }}</div>
+                  <div class="user-email">{{ user.email }}</div>
+                </div>
+              </td>
+              <td>
+                <span [ngClass]="`status-badge role-${user.role}`">{{
+                  user.role
+                }}</span>
+              </td>
+              <td>
+                <span class="status-badge status-active">Active</span>
+              </td>
+              <td>
+                <div class="action-buttons">
+                  <a
+                    href="#"
+                    class="action-btn view"
+                    title="View"
+                    aria-label="View User"
+                    [routerLink]="['/users', user._id]"
+                  >
+                    <i class="fas fa-eye"></i>
+                  </a>
+                  <a
+                    (click)="showAlert('This feature is under development')"
+                    class="action-btn edit"
+                    title="Edit"
+                    aria-label="Edit User"
+                  >
+                    <i class="fas fa-edit"></i>
+                  </a>
+                  <a
+                    (click)="deleteUser(user._id)"
+                    class="action-btn delete"
+                    title="Delete"
+                    aria-label="Delete User"
+                  >
+                    <i class="fas fa-trash-alt"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

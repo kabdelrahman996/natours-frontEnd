@@ -1,0 +1,379 @@
+<div class="profile-wrapper">
+  <!-- Hero Banner -->
+  <div class="profile-banner">
+    <div class="banner-content container">
+      <h1 class="profile-title">الملف الشخصي</h1>
+      <p class="profile-subtitle">
+        {{ isAdmin ? "مرحباً بك في لوحة التحكم" : "مرحباً بك في حسابك الشخصي" }}
+      </p>
+    </div>
+    <div class="banner-overlay"></div>
+  </div>
+
+  <div class="container profile-container">
+    <!-- Loading Animation -->
+    <div class="loading-container" *ngIf="isLoading">
+      <div class="loading-card">
+        <div class="spinner-container">
+          <div class="spinner"></div>
+        </div>
+        <p>جاري تحميل بيانات الحساب...</p>
+      </div>
+    </div>
+
+    <!-- Error Display -->
+    <div class="error-container" *ngIf="error">
+      <div class="error-card">
+        <div class="error-icon">
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <h3>حدث خطأ</h3>
+        <p>{{ error }}</p>
+        <button class="btn-retry" (click)="getCurrentUserData()">
+          <i class="fas fa-sync-alt"></i> إعادة المحاولة
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Profile Content -->
+    <div class="profile-grid" *ngIf="!isLoading && !error">
+      <!-- Left Column - User Info -->
+      <div class="user-info-column">
+        <div class="profile-card main-profile-card">
+          <div class="profile-header">
+            <div class="profile-avatar-container">
+              <div class="profile-avatar">
+                <img
+                  [src]="baseUrl + (currentUser.photo || 'default.jpg')"
+                  [alt]="currentUser.name"
+                />
+              </div>
+              <div
+                class="avatar-badge"
+                [ngClass]="getRoleBadgeClass(currentUser.role)"
+              >
+                <i class="fas" [ngClass]="getRoleIcon(currentUser.role)"></i>
+              </div>
+            </div>
+            <div class="profile-user-info">
+              <h2 class="profile-name">{{ currentUser.name }}</h2>
+              <p class="profile-role">{{ getRoleLabel(currentUser.role) }}</p>
+              <p class="profile-email">
+                <i class="fas fa-envelope"></i> {{ currentUser.email }}
+              </p>
+            </div>
+          </div>
+
+          <div class="profile-actions">
+            <button class="profile-action edit" [routerLink]="['/updateMe']">
+              <span class="icon"><i class="fas fa-user-edit"></i></span>
+              <span class="text">تعديل الملف الشخصي</span>
+            </button>
+            <button
+              class="profile-action password"
+              [routerLink]="['/updatePassword']"
+            >
+              <span class="icon"><i class="fas fa-key"></i></span>
+              <span class="text">تغيير كلمة المرور</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Account Details Card -->
+        <div class="profile-card account-details-card">
+          <div class="card-header">
+            <h3><i class="fas fa-shield-alt"></i> معلومات الحساب</h3>
+          </div>
+          <div class="account-details">
+            <div class="detail-item">
+              <div class="detail-label">البريد الإلكتروني</div>
+              <div class="detail-value">{{ currentUser.email }}</div>
+            </div>
+
+            <div class="detail-item" *ngIf="currentUser.passwordChangedAt">
+              <div class="detail-label">آخر تغيير لكلمة المرور</div>
+              <div class="detail-value">
+                {{ currentUser.passwordChangedAt | date : "medium" }}
+              </div>
+            </div>
+
+            <div class="detail-item">
+              <div class="detail-label">حالة الحساب</div>
+              <div class="detail-value">
+                <span class="status-badge active">
+                  <i class="fas fa-check-circle"></i> نشط
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- My Booked Tours Card -->
+        <div
+          *ngIf="currentUser.role === 'user'"
+          class="profile-card my-bookings-card"
+        >
+          <div class="card-header">
+            <h3><i class="fas fa-ticket-alt"></i> رحلاتي المحجوزة</h3>
+            <a [routerLink]="['/myBookings']" class="view-all">عرض الكل</a>
+          </div>
+
+          <div
+            class="bookings-list"
+            *ngIf="!bookingsLoading && myBookings && myBookings.length > 0"
+          >
+            <div
+              class="booking-list-item"
+              *ngFor="let booking of myBookings.slice(0, 3)"
+            >
+              <div class="booking-icon">
+                <i class="fas fa-map-marked-alt"></i>
+              </div>
+              <div class="booking-info">
+                <h4 class="booking-name">{{ booking.tour.name }}</h4>
+                <div class="booking-details">
+                  <span class="booking-date">
+                    <i class="far fa-calendar-alt"></i> تاريخ الحجز:
+                    {{ booking.createdAt | date : "shortDate" }}
+                  </span>
+                  <span class="booking-price">
+                    <i class="fas fa-tag"></i> {{ booking.price }} $
+                  </span>
+                  <span class="booking-paid" [ngClass]="{ paid: booking.paid }">
+                    <i
+                      class="fas"
+                      [ngClass]="booking.paid ? 'fa-check-circle' : 'fa-clock'"
+                    ></i>
+                    {{ booking.paid ? "مدفوع" : "قيد الانتظار" }}
+                  </span>
+                </div>
+              </div>
+              <a
+                [routerLink]="['/tours', booking.tour._id]"
+                class="booking-view-btn"
+              >
+                عرض التفاصيل <i class="fas fa-chevron-left"></i>
+              </a>
+            </div>
+          </div>
+
+          <div
+            class="empty-bookings-list"
+            *ngIf="!bookingsLoading && (!myBookings || myBookings.length === 0)"
+          >
+            <div class="empty-icon">
+              <i class="fas fa-ticket-alt"></i>
+            </div>
+            <p>لم تقم بحجز أي رحلات بعد</p>
+            <a [routerLink]="['/tours']" class="browse-tours-btn">
+              <i class="fas fa-search"></i> استكشف الرحلات المتاحة
+            </a>
+          </div>
+
+          <div class="loading-bookings" *ngIf="bookingsLoading">
+            <div class="booking-list-skeleton" *ngFor="let i of [1, 2]">
+              <div class="skeleton-icon"></div>
+              <div class="skeleton-content">
+                <div class="skeleton-line"></div>
+                <div class="skeleton-line small"></div>
+                <div class="skeleton-line small"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- All Booked Tours Card -->
+        <div
+          *ngIf="
+            currentUser.role === 'admin' || currentUser.role === 'lead-guide'
+          "
+          class="profile-card my-bookings-card"
+        >
+          <div class="card-header">
+            <h3><i class="fas fa-ticket-alt"></i> الرحلات المحجوزة</h3>
+            <a [routerLink]="['/myBookings']" class="view-all">عرض الكل</a>
+          </div>
+
+          <div
+            class="bookings-list"
+            *ngIf="!bookingsLoading && allBookings && allBookings.length > 0"
+          >
+            <div
+              class="booking-list-item"
+              *ngFor="let booking of allBookings.slice(0, 3)"
+            >
+              <div class="booking-icon">
+                <i class="fas fa-map-marked-alt"></i>
+              </div>
+              <div class="booking-info">
+                <h4 class="booking-name">{{ booking.tour.name }}</h4>
+                <div class="booking-details">
+                  <span class="booking-date">
+                    <i class="far fa-calendar-alt"></i> تاريخ الحجز:
+                    {{ booking.createdAt | date : "shortDate" }}
+                  </span>
+                  <span class="booking-price">
+                    <i class="fas fa-tag"></i> {{ booking.price }} $
+                  </span>
+                  <span class="booking-paid" [ngClass]="{ paid: booking.paid }">
+                    <i
+                      class="fas"
+                      [ngClass]="booking.paid ? 'fa-check-circle' : 'fa-clock'"
+                    ></i>
+                    {{ booking.paid ? "مدفوع" : "قيد الانتظار" }}
+                  </span>
+                </div>
+              </div>
+              <a
+                [routerLink]="['/tours', booking.tour._id]"
+                class="booking-view-btn"
+              >
+                عرض التفاصيل <i class="fas fa-chevron-left"></i>
+              </a>
+            </div>
+          </div>
+
+          <div
+            class="empty-bookings-list"
+            *ngIf="
+              !bookingsLoading && (!allBookings || allBookings.length === 0)
+            "
+          >
+            <div class="empty-icon">
+              <i class="fas fa-ticket-alt"></i>
+            </div>
+            <p>لم يتم حجز رحلات بعد</p>
+          </div>
+
+          <div class="loading-bookings" *ngIf="bookingsLoading">
+            <div class="booking-list-skeleton" *ngFor="let i of [1, 2]">
+              <div class="skeleton-icon"></div>
+              <div class="skeleton-content">
+                <div class="skeleton-line"></div>
+                <div class="skeleton-line small"></div>
+                <div class="skeleton-line small"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column - Admin Dashboard -->
+      <div class="admin-column" *ngIf="isAdmin">
+        <div class="profile-card admin-dashboard-card">
+          <div class="card-header admin-header">
+            <h3><i class="fas fa-tachometer-alt"></i> لوحة تحكم المدير</h3>
+          </div>
+
+          <!-- Admin Stats -->
+          <div class="admin-stats">
+            <div class="stat-card">
+              <div class="stat-icon users-icon">
+                <i class="fas fa-users"></i>
+              </div>
+              <div class="stat-details">
+                <span class="stat-value">{{
+                  usersLoading ? "-" : usersCount
+                }}</span>
+                <span class="stat-label">المستخدمين</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon tours-icon">
+                <i class="fas fa-map-marked-alt"></i>
+              </div>
+              <div class="stat-details">
+                <span class="stat-value">{{ totalTours || "-" }}</span>
+                <span class="stat-label">الرحلات</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon reviews-icon">
+                <i class="fas fa-star"></i>
+              </div>
+              <div class="stat-details">
+                <span class="stat-value">{{ totalReviews || "-" }}</span>
+                <span class="stat-label">التقييمات</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Admin Actions -->
+          <div class="admin-quick-actions">
+            <h4>إجراءات سريعة</h4>
+            <div class="action-buttons">
+              <a [routerLink]="['/usersManagement']" class="admin-action-btn">
+                <i class="fas fa-users"></i>
+                <span>إدارة المستخدمين</span>
+              </a>
+              <a [routerLink]="['/toursManagement']" class="admin-action-btn">
+                <i class="fas fa-map-marked-alt"></i>
+                <span>إدارة الرحلات</span>
+              </a>
+              <a
+                (click)="showAlert('This feature is under development')"
+                class="admin-action-btn"
+              >
+                <i class="fas fa-chart-line"></i>
+                <span>الإحصائيات</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Users Card -->
+        <div class="profile-card recent-users-card">
+          <div class="card-header">
+            <h3><i class="fas fa-user-clock"></i> أحدث المستخدمين</h3>
+            <a [routerLink]="['/usersManagement']" class="view-all">عرض الكل</a>
+          </div>
+
+          <div class="users-list" *ngIf="!usersLoading && users.length > 0">
+            <div class="user-list-item" *ngFor="let user of users.slice(0, 5)">
+              <div class="user-avatar">
+                <img
+                  [src]="baseUrl + (user.photo || 'default.jpg')"
+                  [alt]="user.name"
+                />
+              </div>
+              <div class="user-info">
+                <span class="user-name">{{ user.name }}</span>
+                <span class="user-email">{{ user.email }}</span>
+              </div>
+              <div
+                class="user-role-indicator"
+                [ngClass]="getRoleBadgeClass(user.role)"
+              >
+                {{ getRoleShortLabel(user.role) }}
+              </div>
+              <a [routerLink]="['/users', user._id]" class="user-action-btn">
+                <i class="fas fa-chevron-left"></i>
+              </a>
+            </div>
+          </div>
+
+          <div
+            class="empty-users-list"
+            *ngIf="!usersLoading && users.length === 0"
+          >
+            <div class="empty-icon">
+              <i class="fas fa-users-slash"></i>
+            </div>
+            <p>لا يوجد مستخدمين بعد</p>
+          </div>
+
+          <div class="loading-users" *ngIf="usersLoading">
+            <div class="user-list-skeleton" *ngFor="let i of [1, 2, 3]">
+              <div class="skeleton-avatar"></div>
+              <div class="skeleton-content">
+                <div class="skeleton-line"></div>
+                <div class="skeleton-line small"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

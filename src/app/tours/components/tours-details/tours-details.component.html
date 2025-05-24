@@ -1,0 +1,568 @@
+<div class="tour-details-page">
+  <!-- Loading State -->
+  <app-spinner [text]="'جاري تحميل الرحلة...'" *ngIf="isLoading"></app-spinner>
+
+  <!-- Error State -->
+  <div class="error-state" *ngIf="error">
+    <div class="error-content">
+      <i class="fas fa-exclamation-circle"></i>
+      <h3>عذراً، حدث خطأ</h3>
+      <p>{{ error }}</p>
+      <button class="btn btn-retry" (click)="loadTourDetails()">
+        <i class="fas fa-redo"></i>
+        إعادة المحاولة
+      </button>
+    </div>
+  </div>
+
+  <!-- Tour Details Content -->
+  <div class="tour-details" *ngIf="tour && !isLoading && !error">
+    <!-- Hero Section -->
+    <section
+      class="tour-hero"
+      [style.backgroundImage]="'url(' + imageCover + ')'"
+    >
+      <div class="hero-overlay"></div>
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="tour-title">{{ tour.name }}</h1>
+          <div class="tour-meta">
+            <div class="meta-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>{{ tour.startLocation.description }}</span>
+            </div>
+            <div class="meta-item">
+              <i class="fas fa-clock"></i>
+              <span>{{ tour.duration }} أيام</span>
+            </div>
+            <div class="meta-item">
+              <i class="fas fa-star"></i>
+              <span
+                >{{ tour.ratingsAverage }} ({{
+                  tour.ratingsQuantity
+                }}
+                تقييم)</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="tour-content-wrapper">
+        <!-- Main Content Column -->
+        <main class="main-content">
+          <!-- Quick Info Cards -->
+          <section class="quick-info-section">
+            <div class="quick-info">
+              <div class="info-card">
+                <div class="info-icon">
+                  <i class="fas fa-tag"></i>
+                </div>
+                <div class="info-content">
+                  <span class="info-label">السعر</span>
+                  <span class="info-value">{{ tour.price }} جنيه</span>
+                </div>
+              </div>
+
+              <div class="info-card" *ngIf="tour.priceDiscount">
+                <div class="info-icon">
+                  <i class="fas fa-percentage"></i>
+                </div>
+                <div class="info-content">
+                  <span class="info-label">الخصم</span>
+                  <span class="info-value">{{ tour.priceDiscount }} جنيه</span>
+                </div>
+              </div>
+
+              <div class="info-card">
+                <div class="info-icon">
+                  <i class="fas fa-users"></i>
+                </div>
+                <div class="info-content">
+                  <span class="info-label">حجم المجموعة</span>
+                  <span class="info-value">{{ tour.maxGroupSize }} شخص</span>
+                </div>
+              </div>
+
+              <div class="info-card">
+                <div class="info-icon">
+                  <i class="fas fa-mountain"></i>
+                </div>
+                <div class="info-content">
+                  <span class="info-label">الصعوبة</span>
+                  <span class="info-value">{{
+                    getDifficultyInArabic(tour.difficulty)
+                  }}</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Description Section -->
+          <section class="content-section">
+            <div class="section-header">
+              <h2 class="section-title">وصف الرحلة</h2>
+              <div class="section-divider"></div>
+            </div>
+            <div class="section-body">
+              <p class="tour-description">{{ tour.description }}</p>
+            </div>
+          </section>
+
+          <!-- Image Gallery Section -->
+          <section class="content-section">
+            <div class="section-header">
+              <h2 class="section-title">معرض الصور</h2>
+              <div class="section-divider"></div>
+            </div>
+            <div class="section-body">
+              <div class="image-gallery">
+                <div class="gallery-main">
+                  <img
+                    [src]="images[activeImageIndex]"
+                    [alt]="tour.name"
+                    class="gallery-image"
+                  />
+                </div>
+                <div class="gallery-thumbnails">
+                  <div
+                    *ngFor="let image of images; let i = index"
+                    class="thumbnail"
+                    [class.active]="i === activeImageIndex"
+                    (click)="setActiveImage(i)"
+                  >
+                    <img
+                      [src]="image"
+                      [alt]="tour.name"
+                      class="thumbnail-image"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Tour Journey Section (NEW) -->
+          <section class="content-section">
+            <div class="section-header">
+              <h2 class="section-title">رحلة المغامرة</h2>
+              <div class="section-divider"></div>
+            </div>
+            <div class="section-body">
+              <!-- Start Location -->
+              <div class="journey-start">
+                <div class="location-badge start-badge">
+                  <i class="fas fa-flag-checkered"></i>
+                  <span>نقطة البداية</span>
+                </div>
+                <div class="location-details">
+                  <div class="location-icon start-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                  </div>
+                  <div class="location-text">
+                    <h3 class="location-title">
+                      {{ tour.startLocation.description }}
+                    </h3>
+                    <p class="location-address">
+                      {{ tour.startLocation.address }}
+                    </p>
+                    <p class="location-coordinates">
+                      <small
+                        >الإحداثيات:
+                        {{ tour.startLocation.coordinates[0].toFixed(6) }},
+                        {{
+                          tour.startLocation.coordinates[1].toFixed(6)
+                        }}</small
+                      >
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Journey Timeline -->
+              <div class="journey-timeline">
+                <div
+                  *ngFor="let location of tour.locations; let i = index"
+                  class="timeline-item"
+                >
+                  <div class="timeline-badge">
+                    <span>يوم {{ location.day }}</span>
+                  </div>
+                  <div class="timeline-content">
+                    <div class="location-details timeline-location">
+                      <div class="location-icon">
+                        <i class="fas fa-map-pin"></i>
+                      </div>
+                      <div class="location-text">
+                        <h3 class="location-title">
+                          {{ location.description }}
+                        </h3>
+                        <p *ngIf="location.address" class="location-address">
+                          {{ location.address }}
+                        </p>
+                        <p class="location-coordinates">
+                          <small
+                            >الإحداثيات:
+                            {{ location.coordinates[0].toFixed(6) }},
+                            {{ location.coordinates[1].toFixed(6) }}</small
+                          >
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Map Section (Enhanced) -->
+          <section class="content-section">
+            <div class="section-header">
+              <h2 class="section-title">خريطة الرحلة</h2>
+              <div class="section-divider"></div>
+            </div>
+            <div class="section-body">
+              <!-- In a real app, you'd replace this with an actual map component -->
+              <div class="map-container">
+                <div class="map-placeholder">
+                  <i class="fas fa-map"></i>
+                  <span>خريطة المسار</span>
+                  <p>عدد المواقع: {{ tour.locations.length + 1 }}</p>
+                  <p>المسافة الإجمالية: {{ calculateTotalDistance() }} كم</p>
+                </div>
+              </div>
+              <!-- Map legend -->
+              <div class="map-legend">
+                <div class="legend-item">
+                  <div class="legend-icon start-icon-small">
+                    <i class="fas fa-flag-checkered"></i>
+                  </div>
+                  <span
+                    >نقطة البداية: {{ tour.startLocation.description }}</span
+                  >
+                </div>
+                <div
+                  class="legend-item"
+                  *ngFor="let location of tour.locations; let i = index"
+                >
+                  <div class="legend-icon location-icon-small">
+                    <span>{{ location.day }}</span>
+                  </div>
+                  <span>{{ location.description }}</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Tour Guides Section -->
+          <section
+            class="content-section"
+            *ngIf="tour.guides && tour.guides.length > 0"
+          >
+            <div class="section-header">
+              <h2 class="section-title">مرشدي الرحلة</h2>
+              <div class="section-divider"></div>
+            </div>
+            <div class="section-body">
+              <div class="guides-container">
+                <div *ngFor="let guide of tour.guides" class="guide-card">
+                  <div class="guide-photo">
+                    <img
+                      [src]="guidImageUrl + guide.photo"
+                      [alt]="guide.name"
+                    />
+                  </div>
+                  <div class="guide-info">
+                    <h3 class="guide-name">{{ guide.name }}</h3>
+                    <span class="guide-role">{{
+                      getGuideRoleInArabic(guide.role)
+                    }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Reviews Section -->
+          <section class="content-section">
+            <div class="section-header">
+              <h2 class="section-title">آراء المسافرين</h2>
+              <div class="section-divider"></div>
+            </div>
+
+            <div class="section-body">
+              <!-- Reviews Summary -->
+              <div class="reviews-summary">
+                <div class="overall-rating">
+                  <div class="rating-number">{{ tour.ratingsAverage }}</div>
+                  <!-- <div class="rating-stars-large">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                  </div> -->
+                  <div class="reviews-count">
+                    {{ tour.ratingsQuantity }} تقييم
+                  </div>
+                </div>
+
+                <!-- <div class="rating-breakdown">
+                  <div class="rating-bar-item">
+                    <div class="rating-label">5 نجوم</div>
+                    <div class="rating-bar-container">
+                      <div class="rating-bar" style="width: 80%"></div>
+                    </div>
+                    <div class="rating-percentage">80%</div>
+                  </div>
+                  <div class="rating-bar-item">
+                    <div class="rating-label">4 نجوم</div>
+                    <div class="rating-bar-container">
+                      <div class="rating-bar" style="width: 15%"></div>
+                    </div>
+                    <div class="rating-percentage">15%</div>
+                  </div>
+                  <div class="rating-bar-item">
+                    <div class="rating-label">3 نجوم</div>
+                    <div class="rating-bar-container">
+                      <div class="rating-bar" style="width: 5%"></div>
+                    </div>
+                    <div class="rating-percentage">5%</div>
+                  </div>
+                  <div class="rating-bar-item">
+                    <div class="rating-label">2 نجوم</div>
+                    <div class="rating-bar-container">
+                      <div class="rating-bar" style="width: 0%"></div>
+                    </div>
+                    <div class="rating-percentage">0%</div>
+                  </div>
+                  <div class="rating-bar-item">
+                    <div class="rating-label">1 نجمة</div>
+                    <div class="rating-bar-container">
+                      <div class="rating-bar" style="width: 0%"></div>
+                    </div>
+                    <div class="rating-percentage">0%</div>
+                  </div>
+                </div> -->
+              </div>
+
+              <!-- Reviews Filter -->
+              <!-- <div class="reviews-filter">
+                <div class="filter-label">تصفية حسب:</div>
+                <div class="filter-options">
+                  <button class="filter-btn active">الكل</button>
+                  <button class="filter-btn">الأحدث</button>
+                  <button class="filter-btn">الأعلى تقييماً</button>
+                  <button class="filter-btn">الأقل تقييماً</button>
+                </div>
+              </div> -->
+
+              <!-- Reviews List -->
+              <div *ngFor="let review of tourReviews" class="reviews-list">
+                <!-- Review 1 -->
+                <div class="review-card">
+                  <div class="review-header">
+                    <div class="reviewer-info">
+                      <div class="reviewer-avatar">
+                        <img
+                          [src]="guidImageUrl + review.user?.photo"
+                          [alt]="review.user?.name"
+                        />
+                      </div>
+                      <div class="reviewer-details">
+                        <h4 class="reviewer-name">{{ review.user?.name }}</h4>
+                        <div class="review-date">
+                          {{ review.createdAt | date }}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="review-rating">
+                      <div class="rating-stars">
+                        <i class="fas fa-star"></i>
+                        <!-- <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i> -->
+                      </div>
+                      <div class="rating-value">{{ review.rating }}</div>
+                    </div>
+                  </div>
+                  <div class="review-content">
+                    <p>{{ review.review }}</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Write Review CTA -->
+              <div
+                class="write-review-cta"
+                *ngIf="!showReviewForm && currentUser?.role == 'user'"
+              >
+                <div class="cta-content">
+                  <h4>هل جربت هذه الرحلة؟</h4>
+                  <p>شارك تجربتك وساعد المسافرين الآخرين في اتخاذ قرارهم</p>
+                </div>
+                <button
+                  class="btn-write-review"
+                  (click)="showWriteReviewForm()"
+                >
+                  <i class="fas fa-edit"></i>
+                  كتابة تقييم
+                </button>
+              </div>
+
+              <!-- Review Form (shows when user clicks) -->
+              <div *ngIf="showReviewForm" class="write-review-form-section">
+                <form
+                  [formGroup]="reviewForm"
+                  (ngSubmit)="createReview(tour._id, reviewForm.value)"
+                >
+                  <div class="form-group" style="margin-bottom: 1rem">
+                    <label
+                      for="reviewTextarea"
+                      style="display: block; margin-bottom: 0.5rem"
+                      >اكتب تقييمك</label
+                    >
+                    <textarea
+                      id="reviewTextarea"
+                      formControlName="review"
+                      rows="4"
+                      placeholder="اكتب رأيك هنا..."
+                      class="form-control"
+                      style="width: 100%; padding: 1rem"
+                      required
+                    ></textarea>
+                    <div
+                      *ngIf="
+                        reviewForm.get('review')?.invalid &&
+                        reviewForm.get('review')?.touched
+                      "
+                      style="color: red"
+                    >
+                      يجب كتابة التقييم
+                    </div>
+                  </div>
+                  <div class="form-group" style="margin-bottom: 1rem">
+                    <label for="rating">التقييم:</label>
+                    <select
+                      formControlName="rating"
+                      id="rating"
+                      class="form-control"
+                      style="margin-right: 0.5rem"
+                    >
+                      <option *ngFor="let r of [5, 4, 3, 2, 1]" [value]="r">
+                        {{ r }} نجوم
+                      </option>
+                    </select>
+                  </div>
+                  <div style="display: flex; gap: 0.7rem">
+                    <button
+                      class="btn-write-review"
+                      [disabled]="reviewForm.invalid"
+                      type="submit"
+                    >
+                      نشر التقييم
+                    </button>
+                    <button
+                      class="btn-write-review"
+                      type="button"
+                      style="background: #e57373"
+                      (click)="hideWriteReviewForm()"
+                    >
+                      إلغاء
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </section>
+        </main>
+
+        <!-- Booking Sidebar -->
+        <aside class="booking-sidebar">
+          <div class="booking-card">
+            <div class="booking-header">
+              <h3 class="booking-title">احجز هذه الرحلة</h3>
+              <div class="price-info">
+                <span class="price">{{ finalPrice }}</span>
+                <span class="currency">جنيه</span>
+                <span class="per-person">للشخص</span>
+              </div>
+            </div>
+
+            <button
+              *ngIf="currentUser?.role == 'user'"
+              class="btn-book"
+              (click)="booking(tour._id)"
+            >
+              <i class="fas fa-calendar-check"></i>
+              <span>احجز الآن</span>
+            </button>
+
+            <button
+              *ngIf="
+                currentUser?.role == 'admin' ||
+                currentUser?.role == 'lead-guide'
+              "
+              class="btn-book"
+              [routerLink]="['/editTour', tour._id]"
+            >
+              <i class="fa-solid fa-pen-to-square"></i>
+              <span>تعديل الرحلة</span>
+            </button>
+
+            <button
+              *ngIf="!currentUser"
+              class="btn-book"
+              [routerLink]="['/login']"
+            >
+              <i class="fas fa-calendar-check"></i>
+              <span>سجل الدخول أولا</span>
+            </button>
+
+            <div class="booking-features">
+              <div class="feature">
+                <i class="fas fa-check-circle feature-icon"></i>
+                <span class="feature-text">إلغاء مجاني حتى 24 ساعة</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check-circle feature-icon"></i>
+                <span class="feature-text">دليل سياحي محترف</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check-circle feature-icon"></i>
+                <span class="feature-text">تأمين سفر شامل</span>
+              </div>
+              <div class="feature">
+                <i class="fas fa-check-circle feature-icon"></i>
+                <span class="feature-text"
+                  >{{ tour.locations.length + 1 }} مواقع متنوعة</span
+                >
+              </div>
+            </div>
+
+            <!-- Tour Dates (NEW) -->
+            <div class="booking-dates">
+              <h4>تواريخ الانطلاق</h4>
+              <div class="dates-list">
+                <div *ngFor="let date of tour.startDates" class="date-item">
+                  <i class="fas fa-calendar-alt"></i>
+                  <span>{{ date | date : "longDate" }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="booking-footer">
+              <p class="availability-text">
+                استمتع بتجربة سفر فريدة مع هذه الرحلة المميزة. احجز الآن واستعد
+                لمغامرة لا تُنسى!
+              </p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</div>

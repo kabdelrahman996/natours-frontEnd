@@ -1,0 +1,71 @@
+<div class="edit-profile-wrapper" *ngIf="!isLoading; else loading">
+  <!-- Success Message -->
+  <div class="alert alert-success" *ngIf="isUpdated">
+    <i class="fas fa-check-circle"></i>
+    تم تحديث البيانات بنجاح
+  </div>
+
+  <form [formGroup]="userForm" (ngSubmit)="updateProfile()">
+    <div class="form-group">
+      <label>صورة الملف الشخصي</label>
+
+      <div class="image-upload-container">
+        <!-- Clickable image preview that triggers file input -->
+        <div
+          *ngIf="currentImageUrl"
+          class="image-preview"
+          (click)="fileInput.click()"
+        >
+          <img [src]="currentImageUrl" alt="الصورة الحالية" />
+          <div class="image-overlay">
+            <i class="fas fa-camera"></i>
+            <!-- Font Awesome icon, optional -->
+            <span>تغيير الصورة</span>
+          </div>
+          <p class="text-muted">الصورة الحالية</p>
+        </div>
+
+        <!-- File input (hidden but triggered by image click) -->
+        <input
+          #fileInput
+          type="file"
+          (change)="onImageSelected($event)"
+          accept="image/*"
+          class="file-input"
+          style="display: none"
+        />
+
+        <!-- Fallback for when no image exists -->
+        <div
+          *ngIf="!currentImageUrl"
+          class="no-image"
+          (click)="fileInput.click()"
+        >
+          <i class="fas fa-user-circle"></i>
+          <!-- Default icon -->
+          <span>اختر صورة</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>الاسم الكامل</label>
+      <input type="text" formControlName="fullName" />
+    </div>
+
+    <div class="form-group">
+      <label>البريد الإلكتروني</label>
+      <input type="email" formControlName="email" />
+    </div>
+
+    <div class="actions d-flex justify-content-between">
+      <button type="submit" [disabled]="userForm.invalid">تحديث</button>
+
+      <button [routerLink]="['/updatePassword']">تحديث كلمة المرور</button>
+    </div>
+  </form>
+</div>
+
+<ng-template #loading>
+  <app-spinner></app-spinner>
+</ng-template>

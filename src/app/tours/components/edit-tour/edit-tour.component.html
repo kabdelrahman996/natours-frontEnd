@@ -1,0 +1,440 @@
+<div class="tour-edit-wrapper" dir="rtl">
+  <!-- شريط العنوان -->
+  <div class="tour-edit-banner">
+    <div class="banner-content container">
+      <h1 class="edit-title">تعديل الرحلة السياحية</h1>
+      <p class="edit-subtitle">قم بتخصيص تفاصيل الرحلة وتحديثها</p>
+    </div>
+    <div class="banner-overlay"></div>
+  </div>
+
+  <div class="container edit-container">
+    <!-- حالة التحميل -->
+    <div class="loading-container" *ngIf="isLoading">
+      <div class="loading-card">
+        <div class="spinner-container">
+          <div class="spinner"></div>
+        </div>
+        <p>جاري تحميل بيانات الرحلة...</p>
+      </div>
+    </div>
+
+    <!-- محتوى نموذج التعديل -->
+    <div class="edit-form-content" *ngIf="!isLoading">
+      <form [formGroup]="tourForm" (ngSubmit)="onSubmit()">
+        <!-- المعلومات الأساسية -->
+        <div class="edit-card main-info-card">
+          <div class="card-header">
+            <h3><i class="fas fa-info-circle"></i> المعلومات الأساسية</h3>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">اسم الرحلة</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="name"
+                  placeholder="أدخل اسم الرحلة"
+                  [class.is-invalid]="
+                    tourForm.get('name')?.invalid &&
+                    tourForm.get('name')?.touched
+                  "
+                />
+                <div
+                  class="invalid-feedback"
+                  *ngIf="
+                    tourForm.get('name')?.invalid &&
+                    tourForm.get('name')?.touched
+                  "
+                >
+                  يجب أن يكون الاسم 10 أحرف على الأقل
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label">المدة (بالأيام)</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="duration"
+                  placeholder="عدد الأيام"
+                  [class.is-invalid]="
+                    tourForm.get('duration')?.invalid &&
+                    tourForm.get('duration')?.touched
+                  "
+                />
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label">الحد الأقصى لحجم المجموعة</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="maxGroupSize"
+                  placeholder="عدد الأشخاص"
+                  [class.is-invalid]="
+                    tourForm.get('maxGroupSize')?.invalid &&
+                    tourForm.get('maxGroupSize')?.touched
+                  "
+                />
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label">مستوى الصعوبة</label>
+                <select
+                  class="form-select"
+                  formControlName="difficulty"
+                  [class.is-invalid]="
+                    tourForm.get('difficulty')?.invalid &&
+                    tourForm.get('difficulty')?.touched
+                  "
+                >
+                  <option value="">اختر المستوى</option>
+                  <option *ngFor="let diff of difficulties" [value]="diff">
+                    {{
+                      diff === "easy"
+                        ? "سهل"
+                        : diff === "medium"
+                        ? "متوسط"
+                        : "صعب"
+                    }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label">السعر</label>
+                <div class="input-group">
+                  <input
+                    type="number"
+                    class="form-control"
+                    formControlName="price"
+                    placeholder="أدخل السعر"
+                    [class.is-invalid]="
+                      tourForm.get('price')?.invalid &&
+                      tourForm.get('price')?.touched
+                    "
+                  />
+                  <span class="input-group-text">جنيه</span>
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label">الخصم</label>
+                <div class="input-group">
+                  <input
+                    type="number"
+                    class="form-control"
+                    formControlName="priceDiscount"
+                    placeholder="أدخل قيمة الخصم"
+                  />
+                  <span class="input-group-text"
+                    ><i class="fas fa-percentage"></i
+                  ></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- الوصف -->
+        <div class="edit-card description-card">
+          <div class="card-header">
+            <h3><i class="fas fa-align-right"></i> الوصف</h3>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label class="form-label">ملخص الرحلة</label>
+              <textarea
+                class="form-control"
+                rows="3"
+                formControlName="summary"
+                placeholder="أدخل ملخصًا موجزًا للرحلة"
+                [class.is-invalid]="
+                  tourForm.get('summary')?.invalid &&
+                  tourForm.get('summary')?.touched
+                "
+              ></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">الوصف التفصيلي</label>
+              <textarea
+                class="form-control"
+                rows="5"
+                formControlName="description"
+                placeholder="أدخل وصفًا تفصيليًا للرحلة"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- الصور -->
+        <div class="edit-card images-card">
+          <div class="card-header">
+            <h3><i class="fas fa-images"></i> صور الرحلة</h3>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <!-- صورة الغلاف -->
+              <div class="col-md-6 mb-4">
+                <label class="form-label">صورة الغلاف</label>
+
+                <div class="image-preview-container">
+                  <!-- الصورة الحالية للغلاف -->
+                  <div class="current-image-preview" *ngIf="existingImageCover">
+                    <img
+                      [src]="getImageUrl(existingImageCover)"
+                      alt="صورة الغلاف الحالية"
+                    />
+                    <div class="image-overlay">
+                      <p>الصورة الحالية</p>
+                    </div>
+                  </div>
+
+                  <!-- مربع تحميل الصورة -->
+                  <div class="upload-box">
+                    <input
+                      type="file"
+                      id="coverImageInput"
+                      class="file-input"
+                      (change)="onImageCoverSelected($event)"
+                      accept="image/*"
+                    />
+                    <label for="coverImageInput" class="upload-label">
+                      <i class="fas fa-cloud-upload-alt"></i>
+                      <span>اختر صورة الغلاف</span>
+                    </label>
+                  </div>
+                </div>
+
+                <small class="helper-text"
+                  >اترك الحقل فارغًا للاحتفاظ بالصورة الحالية</small
+                >
+              </div>
+
+              <!-- صور الرحلة -->
+              <div class="col-md-6 mb-4">
+                <label class="form-label">صور الرحلة (الحد الأقصى 3 صور)</label>
+
+                <!-- الصور الحالية للرحلة -->
+                <div class="tour-images-grid" *ngIf="existingImages.length > 0">
+                  <div
+                    class="tour-image-item"
+                    *ngFor="let img of existingImages"
+                  >
+                    <img [src]="getImageUrl(img)" alt="صورة الرحلة" />
+                  </div>
+                </div>
+
+                <!-- مربع تحميل الصور -->
+                <div class="upload-box">
+                  <input
+                    type="file"
+                    id="tourImagesInput"
+                    class="file-input"
+                    (change)="onImagesSelected($event)"
+                    multiple
+                    accept="image/*"
+                    max="3"
+                  />
+                  <label for="tourImagesInput" class="upload-label">
+                    <i class="fas fa-images"></i>
+                    <span>اختر صور الرحلة</span>
+                  </label>
+                </div>
+
+                <small class="helper-text"
+                  >اترك الحقل فارغًا للاحتفاظ بالصور الحالية</small
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- تواريخ البدء -->
+        <div class="edit-card dates-card">
+          <div class="card-header">
+            <h3><i class="fas fa-calendar-alt"></i> تواريخ البدء</h3>
+          </div>
+          <div class="card-body">
+            <div formArrayName="startDates" class="dates-container">
+              <div
+                *ngFor="let date of startDates.controls; let i = index"
+                class="date-item"
+              >
+                <div class="input-group">
+                  <input
+                    type="date"
+                    class="form-control"
+                    [formControlName]="i"
+                  />
+                  <button
+                    type="button"
+                    class="btn-remove"
+                    (click)="removeStartDate(i)"
+                  >
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <button type="button" class="btn-add" (click)="addStartDate()">
+              <i class="fas fa-plus-circle"></i> إضافة تاريخ بدء
+            </button>
+          </div>
+        </div>
+
+        <!-- موقع البداية -->
+        <div class="edit-card location-card">
+          <div class="card-header">
+            <h3><i class="fas fa-map-marker-alt"></i> موقع البداية</h3>
+          </div>
+          <div class="card-body" formGroupName="startLocation">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">الوصف</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="description"
+                  placeholder="وصف نقطة البداية"
+                />
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label">العنوان</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="address"
+                  placeholder="عنوان نقطة البداية"
+                />
+              </div>
+
+              <div class="col-md-12 mb-3" formArrayName="coordinates">
+                <label class="form-label">الإحداثيات</label>
+                <div class="coordinates-container">
+                  <div class="coordinate-input">
+                    <span class="coordinate-label">خط الطول</span>
+                    <input
+                      type="number"
+                      class="form-control"
+                      [formControlName]="0"
+                      placeholder="خط الطول"
+                    />
+                  </div>
+                  <div class="coordinate-input">
+                    <span class="coordinate-label">خط العرض</span>
+                    <input
+                      type="number"
+                      class="form-control"
+                      [formControlName]="1"
+                      placeholder="خط العرض"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- مواقع الرحلة -->
+        <div class="edit-card locations-card">
+          <div class="card-header">
+            <h3><i class="fas fa-map-signs"></i> مواقع الرحلة</h3>
+          </div>
+          <div class="card-body">
+            <div formArrayName="locations" class="locations-container">
+              <div
+                *ngFor="let location of locations.controls; let i = index"
+                [formGroupName]="i"
+                class="location-item"
+              >
+                <div class="location-item-header">
+                  <div class="location-number">{{ i + 1 }}</div>
+                  <button
+                    type="button"
+                    class="btn-remove"
+                    (click)="removeLocation(i)"
+                  >
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </div>
+
+                <div class="location-item-body">
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">الوصف</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="description"
+                        placeholder="وصف الموقع"
+                      />
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">اليوم</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        formControlName="day"
+                        placeholder="رقم اليوم"
+                      />
+                    </div>
+
+                    <div class="col-md-12 mb-3" formArrayName="coordinates">
+                      <label class="form-label">الإحداثيات</label>
+                      <div class="coordinates-container">
+                        <div class="coordinate-input">
+                          <span class="coordinate-label">خط الطول</span>
+                          <input
+                            type="number"
+                            class="form-control"
+                            [formControlName]="0"
+                            placeholder="خط الطول"
+                          />
+                        </div>
+                        <div class="coordinate-input">
+                          <span class="coordinate-label">خط العرض</span>
+                          <input
+                            type="number"
+                            class="form-control"
+                            [formControlName]="1"
+                            placeholder="خط العرض"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button type="button" class="btn-add" (click)="addLocation()">
+              <i class="fas fa-plus-circle"></i> إضافة موقع جديد
+            </button>
+          </div>
+        </div>
+
+        <!-- أزرار الإجراءات -->
+        <div class="form-actions">
+          <button
+            type="submit"
+            class="btn-submit"
+            [disabled]="!tourForm.valid || isLoading"
+          >
+            <i class="fas fa-save"></i> حفظ التغييرات
+          </button>
+
+          <button type="button" class="btn-cancel" routerLink="/tours">
+            <i class="fas fa-times"></i> إلغاء
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

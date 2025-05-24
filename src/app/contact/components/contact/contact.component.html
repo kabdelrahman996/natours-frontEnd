@@ -1,0 +1,116 @@
+<div class="contact-page">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="container">
+      <h1 class="hero-title">اتصل بنا</h1>
+      <p class="hero-subtitle">نحن هنا لمساعدتك والإجابة على استفساراتك</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="contact-content">
+      <!-- Contact Information -->
+      <div class="contact-info">
+        <h2>معلومات التواصل</h2>
+
+        <div class="info-card">
+          <i class="fas fa-map-marker-alt"></i>
+          <div class="info-details">
+            <h3>العنوان</h3>
+            <p>123 شارع التحرير، القاهرة، مصر</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <i class="fas fa-phone"></i>
+          <div class="info-details">
+            <h3>الهاتف</h3>
+            <p>+20 123 456 789</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <i class="fas fa-envelope"></i>
+          <div class="info-details">
+            <h3>البريد الإلكتروني</h3>
+            <p>{{ "info@zoha.com" }}</p>
+          </div>
+        </div>
+
+        <div class="social-links">
+          <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="contact-form">
+        <h2>أرسل رسالة</h2>
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label>الاسم</label>
+            <input type="text" formControlName="name" class="form-control" />
+            <div
+              class="error-message"
+              *ngIf="
+                contactForm.get('name')?.touched &&
+                contactForm.get('name')?.invalid
+              "
+            >
+              يرجى إدخال الاسم
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>البريد الإلكتروني</label>
+            <input type="email" formControlName="email" class="form-control" />
+            <div
+              class="error-message"
+              *ngIf="
+                contactForm.get('email')?.touched &&
+                contactForm.get('email')?.invalid
+              "
+            >
+              يرجى إدخال بريد إلكتروني صحيح
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>الموضوع</label>
+            <input type="text" formControlName="subject" class="form-control" />
+          </div>
+
+          <div class="form-group">
+            <label>الرسالة</label>
+            <textarea
+              formControlName="message"
+              class="form-control"
+              rows="5"
+            ></textarea>
+            <div
+              class="error-message"
+              *ngIf="
+                contactForm.get('message')?.touched &&
+                contactForm.get('message')?.invalid
+              "
+            >
+              يرجى إدخال رسالتك
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="btn-submit"
+            [disabled]="contactForm.invalid || isSubmitting"
+          >
+            <span *ngIf="!isSubmitting">إرسال الرسالة</span>
+            <span *ngIf="isSubmitting">جاري الإرسال...</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

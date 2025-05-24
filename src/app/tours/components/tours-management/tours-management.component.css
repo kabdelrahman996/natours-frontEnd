@@ -1,0 +1,45 @@
+/* Custom styles to complement Bootstrap */
+.tour-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+}
+
+/* RTL specific adjustments */
+.input-group .input-group-text {
+  border-right: 1px solid #ced4da;
+  border-left: none;
+}
+
+.input-group .form-control {
+  border-right: none;
+  border-left: 1px solid #ced4da;
+}
+
+/* Custom hover effect for table rows */
+.table-hover tbody tr:hover {
+  background-color: rgba(38, 166, 154, 0.05);
+}
+
+/* Adjust spacing for icons in buttons */
+.btn i {
+  margin-left: 5px;
+}
+
+/* Custom styles for the badge */
+.badge {
+  padding: 0.5em 0.8em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .btn-group .btn {
+    width: 100%;
+  }
+}

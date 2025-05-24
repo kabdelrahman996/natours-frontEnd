@@ -1,0 +1,77 @@
+<section class="tours-section">
+  <!-- Hero Banner -->
+  <div class="tours-hero">
+    <div class="container">
+      <h1 class="hero-title">اكتشف رحلات مميزة</h1>
+      <p class="hero-subtitle">تجارب سفر فريدة في أجمل معالم مصر السياحية</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Filters Section -->
+    <!-- <div class="filters-wrapper">
+      <app-tours-filters
+        (filterChange)="onFilterChange($event)"
+        [locations]="locations"
+      ></app-tours-filters>
+    </div> -->
+
+    <!-- Tours Count & Sort -->
+    <div class="tours-header" *ngIf="!isLoading && !error">
+      <div class="tours-count">
+        <i class="fas fa-map-marked-alt"></i>
+        <span>{{ tours.length }} رحلة متاحة</span>
+      </div>
+
+      <div class="tours-sort">
+        <select class="form-select" (change)="onSortChange($event)">
+          <option value="price-asc">السعر: من الأقل للأعلى</option>
+          <option value="price-desc">السعر: من الأعلى للأقل</option>
+          <option value="rating-desc">التقييم: من الأعلى للأقل</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <app-spinner
+      [text]="'جاري تحميل الرحلات...'"
+      *ngIf="isLoading"
+    ></app-spinner>
+
+    <!-- Error State -->
+    <div class="error-state" *ngIf="error">
+      <div class="error-content">
+        <i class="fas fa-exclamation-circle"></i>
+        <h3>عذراً، حدث خطأ</h3>
+        <p>{{ error }}</p>
+        <button class="btn btn-retry" (click)="loadTours()">
+          <i class="fas fa-redo"></i>
+          إعادة المحاولة
+        </button>
+      </div>
+    </div>
+
+    <!-- Tours Grid -->
+    <div class="tours-grid" *ngIf="!isLoading && !error">
+      <app-tours-card
+        *ngFor="let tour of tours"
+        [tour]="tour"
+        [currentUser]="currentUser"
+        class="tour-card-wrapper"
+      >
+      </app-tours-card>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="!isLoading && !error && tours.length === 0">
+      <div class="empty-content">
+        <i class="fas fa-search"></i>
+        <h3>لا توجد رحلات متاحة</h3>
+        <p>جرب تغيير معايير البحث للعثور على رحلات أخرى</p>
+        <button class="btn btn-reset" (click)="resetFilters()">
+          إعادة ضبط الفلتر
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

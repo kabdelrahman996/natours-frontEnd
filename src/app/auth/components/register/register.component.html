@@ -1,0 +1,146 @@
+<!-- src/app/auth/components/login/login.component.html -->
+
+<div class="auth-page">
+  <div class="auth-container">
+    <div class="auth-box">
+      <div class="auth-header">
+        <h1>تسجيل حساب جديد</h1>
+        <p>تمتع بجميع الخدمات المتاحة عن طريق تسجيل حساب جديد.</p>
+      </div>
+
+      <form
+        [formGroup]="registerForm"
+        (ngSubmit)="onSubmit()"
+        class="auth-form"
+      >
+        <!-- Error Message -->
+        <div class="error-alert" *ngIf="error">
+          {{ error }}
+        </div>
+
+        <!-- Name Field  -->
+        <div class="form-group">
+          <label>الاسم الكامل</label>
+          <div class="input-group">
+            <i class="fas fa-user"></i>
+            <input
+              type="text"
+              formControlName="name"
+              class="form-control"
+              [class.is-invalid]="
+                registerForm.get('name')?.touched &&
+                registerForm.get('name')?.invalid
+              "
+            />
+          </div>
+          <div
+            class="error-message"
+            *ngIf="
+              registerForm.get('name')?.touched &&
+              registerForm.get('name')?.invalid
+            "
+          >
+            يرجى إدخال الاسم الكامل
+          </div>
+        </div>
+
+        <!-- Email Field -->
+        <div class="form-group">
+          <label>البريد الإلكتروني</label>
+          <div class="input-group">
+            <i class="fas fa-envelope"></i>
+            <input
+              type="email"
+              formControlName="email"
+              class="form-control"
+              [class.is-invalid]="
+                registerForm.get('email')?.touched &&
+                registerForm.get('email')?.invalid
+              "
+            />
+          </div>
+          <div
+            class="error-message"
+            *ngIf="
+              registerForm.get('email')?.touched &&
+              registerForm.get('email')?.invalid
+            "
+          >
+            يرجى إدخال بريد إلكتروني صحيح
+          </div>
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group">
+          <label>كلمة المرور</label>
+          <div class="input-group">
+            <i class="fas fa-lock"></i>
+            <input
+              type="password"
+              formControlName="password"
+              class="form-control"
+              [class.is-invalid]="
+                registerForm.get('password')?.touched &&
+                registerForm.get('password')?.invalid
+              "
+            />
+          </div>
+          <div
+            class="error-message"
+            *ngIf="
+              registerForm.get('password')?.touched &&
+              registerForm.get('password')?.invalid
+            "
+          >
+            يرجى إدخال كلمة المرور
+          </div>
+        </div>
+
+        <!-- Password Confirm Field -->
+        <div class="form-group">
+          <label>تأكيد كلمة المرور</label>
+          <div class="input-group">
+            <i class="fas fa-lock"></i>
+            <input
+              type="password"
+              formControlName="passwordConfirm"
+              class="form-control"
+              [class.is-invalid]="
+                registerForm.get('passwordConfirm')?.touched &&
+                registerForm.get('passwordConfirm')?.invalid
+              "
+            />
+          </div>
+          <div
+            class="error-message"
+            *ngIf="
+              registerForm.get('passwordConfirm')?.touched &&
+              registerForm.get('passwordConfirm')?.invalid
+            "
+          >
+            يرجى تأكيد كلمة المرور
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          class="btn-submit"
+          [disabled]="
+            registerForm.invalid ||
+            isLoading ||
+            registerForm.value.password !== registerForm.value.passwordConfirm
+          "
+        >
+          <span *ngIf="!isLoading">تسجيل </span>
+          <div class="spinner" *ngIf="isLoading"></div>
+        </button>
+
+        <!-- Additional Links -->
+        <div class="auth-links">
+          <a routerLink="/login"> لدي حساب بالفعل </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

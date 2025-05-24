@@ -1,0 +1,31 @@
+<section class="reviews">
+  <div class="container">
+    <h2 class="section-title">آراء عملائنا</h2>
+    <div class="reviews-slider">
+      <div class="row">
+        <div class="col-md-4" *ngFor="let review of reviews">
+          <div class="review-card">
+            <div class="review-header">
+              <img
+                [src]="review.avatar"
+                [alt]="review.name"
+                class="reviewer-avatar"
+              />
+              <div class="reviewer-info">
+                <h4>{{ review.name }}</h4>
+                <div class="rating">
+                  <i
+                    class="fas fa-star"
+                    *ngFor="let star of [1, 2, 3, 4, 5]"
+                  ></i>
+                </div>
+              </div>
+            </div>
+            <p class="review-text">{{ review.text }}</p>
+            <div class="review-date">{{ review.date }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

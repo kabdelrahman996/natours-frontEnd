@@ -1,0 +1,87 @@
+<!-- src/app/auth/components/login/login.component.html -->
+
+<div class="auth-page">
+  <div class="auth-container">
+    <div class="auth-box">
+      <div class="auth-header">
+        <h1>تسجيل الدخول</h1>
+        <p>مرحباً بك مجدداً! يرجى تسجيل الدخول للمتابعة</p>
+      </div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+        <!-- Error Message -->
+        <div class="error-alert" *ngIf="error">
+          {{ error }}
+        </div>
+
+        <!-- Email Field -->
+        <div class="form-group">
+          <label>البريد الإلكتروني</label>
+          <div class="input-group">
+            <i class="fas fa-envelope"></i>
+            <input
+              type="email"
+              formControlName="email"
+              class="form-control"
+              [class.is-invalid]="
+                loginForm.get('email')?.touched &&
+                loginForm.get('email')?.invalid
+              "
+            />
+          </div>
+          <div
+            class="error-message"
+            *ngIf="
+              loginForm.get('email')?.touched && loginForm.get('email')?.invalid
+            "
+          >
+            يرجى إدخال بريد إلكتروني صحيح
+          </div>
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group">
+          <label>كلمة المرور</label>
+          <div class="input-group">
+            <i class="fas fa-lock"></i>
+            <input
+              type="password"
+              formControlName="password"
+              class="form-control"
+              [class.is-invalid]="
+                loginForm.get('password')?.touched &&
+                loginForm.get('password')?.invalid
+              "
+            />
+          </div>
+          <div
+            class="error-message"
+            *ngIf="
+              loginForm.get('password')?.touched &&
+              loginForm.get('password')?.invalid
+            "
+          >
+            يرجى إدخال كلمة المرور
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          class="btn-submit"
+          [disabled]="loginForm.invalid || isLoading"
+        >
+          <span *ngIf="!isLoading">تسجيل الدخول</span>
+          <div class="spinner" *ngIf="isLoading"></div>
+        </button>
+
+        <!-- Additional Links -->
+        <div class="auth-links">
+          <a routerLink="/forgot-password">نسيت كلمة المرور؟</a>
+          <span class="divider">|</span>
+          <a routerLink="/signup">إنشاء حساب جديد</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
